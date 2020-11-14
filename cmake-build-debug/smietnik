@@ -1,3 +1,33 @@
+/*cout<<"ETA:\n";
+        for(int a=0;a<4;a++) {
+            for (int b = 0; b < 4; b++) {
+                cout << dNdEta[a][b] << "\t";
+            }
+            cout << endl;
+        }
+        cout<<"KSI:\n";
+        for(int c=0;c<4;c++) {
+            for (int d = 0; d < 4; d++) {
+                cout << dNdKsi[c][d] << "\t";
+            }
+            cout << endl;
+        }*/
+
+        /*
+        cout<<"dX/dEta\t\tdX/dKsi\n";
+        for(int a=0;a<4;a++)
+        {
+            cout<<dNdEta[a]<<"\t"<<dNdKsi[a]<<endl;
+        }*/
+/*vector<double> dNdKsi
+            {
+                    {(-0.25*(1-eta[0])),(0.25*(1-eta[0])),(0.25*(1+eta[0])),(-0.25*(1+eta[0]))}
+            };
+    vector<double> dNdEta
+            {
+                    {(-0.25*(1-ksi[0])),(-0.25*(1+ksi[0])),(0.25*(1+ksi[0])),(0.25*(1-ksi[0]))}
+            };*/
+
 /*void multiply4x4Vectors(<vector<vector<double>> a,,<vector<vector<double>> b,<vector<vector<double>> c){
         //(double a[][],double b[][],double c[][]){
     double sum=0;

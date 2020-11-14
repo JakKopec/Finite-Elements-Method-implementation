@@ -13,6 +13,24 @@ using namespace std;
 class Elem4;
 class Element;
 double elem4solve(Elem4 a,Element b);
+void displayArray(vector<vector<double>> c) {
+    cout.precision(3);
+    for (int a = 0; a < 4; a++) {
+        for (int b = 0; b < 4; b++) {
+            cout << c[a][b] << "\t";
+        }
+        cout << endl;
+    }
+    cout<<endl;
+}
+vector<vector<double>> sumVectors4x4(vector<vector<double>> a,vector<vector<double>> b,vector<vector<double>> result){
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            result[i][j]=a[i][j]+b[i][j];
+        }
+    }
+    return result;
+};
 class Node
 {
 public:
@@ -54,6 +72,12 @@ public:
     int elemID;
     vector <Node> nodes;
     vector <int> id;
+    vector<vector<double>> H = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
     Element()
     {
         this->elemID=++staticelemID;
@@ -80,10 +104,21 @@ public:
     }
     void displayElement()
     {
+        cout.precision(2);
+        cout<<"Element: "<<this->elemID<<"\tPunkty calkowania:\n";
         for(int i=0;i<4;i++)
         {
-            cout<<this->nodes[i].x<<"\t"<<this->nodes[i].y<<endl;
+            cout<<"x: "<<this->nodes[i].x<<"\ty: "<<this->nodes[i].y<<endl;
         }
+        cout<<"Macierz H:\n";
+        cout.precision(3);
+        for (int a = 0; a < 4; a++) {
+            for (int b = 0; b < 4; b++) {
+                cout << this->H[a][b] << "\t";
+            }
+            cout << endl;
+        }
+        cout<<endl;
         return;
     }
 
@@ -127,14 +162,14 @@ public:
         nN=nH*nW;
         dw=(double)W/(nW-1);
         dh=(double)H/(nH-1);
-        cout<<"\tODCZYT Z PLIKU:";
+        /*cout<<"\tODCZYT Z PLIKU:";
         cout<<"\nSZEROKOSC:"<<W;
         cout<<"\nWYSOKOSC:"<<H;
         cout<<"\nILOSC WEZLOW NA 1 ODCINKU W:"<<nW;
         cout<<"\nILOSC WEZLOW NA 1 ODCINKU H:"<<nH;
         cout<<"\nILOSC ELEMENTOW:"<<nE;
         cout<<"\ndw:"<<dw;
-        cout<<"\ndh:"<<dh<<endl<<endl;
+        cout<<"\ndh:"<<dh<<endl<<endl;*/
     }
 };
 
@@ -197,6 +232,9 @@ public:
         arrE[index].nodes[2].displayNode();
         arrE[index].nodes[3].displayNode();
     }
+    int retArrElemSize(){
+        return this->arrE.size();
+    }
 };
 
 
@@ -238,16 +276,6 @@ double gaussQuadrature2D(const int k){
     cout<<"Wrong argument!\n";
     return -1;
 }
-void displayArray(vector<vector<double>> c) {
-    cout.precision(3);
-    for (int a = 0; a < 4; a++) {
-        for (int b = 0; b < 4; b++) {
-            cout << c[a][b] << "\t";
-        }
-        cout << endl;
-    }
-    cout<<endl<<endl;
-}
 
 class Elem4 {
 public:
@@ -257,12 +285,6 @@ public:
     double jacobian[2][2] = {0};
     double reversedJacobian[2][2] = {0};
     double det = 0;
-    vector<vector<double>> H = {
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0}
-    };
     vector<vector<double>> dNdKsi
             {
                     {(-0.25 * (1 - eta[0])), (0.25 * (1 - eta[0])), (0.25 * (1 + eta[0])), (-0.25 * (1 + eta[0]))},
@@ -278,98 +300,25 @@ public:
                     {(-0.25 * (1 - ksi[3])), (-0.25 * (1 + ksi[3])), (0.25 * (1 + ksi[3])), (0.25 * (1 - ksi[3]))}
             };
 
-    /*vector<double> dNdKsi
-            {
-                    {(-0.25*(1-eta[0])),(0.25*(1-eta[0])),(0.25*(1+eta[0])),(-0.25*(1+eta[0]))}
-            };
-    vector<double> dNdEta
-            {
-                    {(-0.25*(1-ksi[0])),(-0.25*(1+ksi[0])),(0.25*(1+ksi[0])),(0.25*(1-ksi[0]))}
-            };*/
-    vector<vector<double>> elem4solve(int point, Element b, vector<double> x, vector<double> y) {
-        /*cout<<"ETA:\n";
-        for(int a=0;a<4;a++) {
-            for (int b = 0; b < 4; b++) {
-                cout << dNdEta[a][b] << "\t";
-            }
-            cout << endl;
-        }
-        cout<<"KSI:\n";
-        for(int c=0;c<4;c++) {
-            for (int d = 0; d < 4; d++) {
-                cout << dNdKsi[c][d] << "\t";
-            }
-            cout << endl;
-        }*/
-
-        /*
-        cout<<"dX/dEta\t\tdX/dKsi\n";
-        for(int a=0;a<4;a++)
-        {
-            cout<<dNdEta[a]<<"\t"<<dNdKsi[a]<<endl;
-        }*/
+    vector<vector<double>> elem4solve(Element b) {
         double jacobian[4] = {0, 0, 0, 0};
         double reversedJacobian[4] = {0, 0, 0, 0};
-        double det = 0;
         double i11 = 0;
         double i12 = 0;
         double i21 = 0;
         double i22 = 0;
-        for (int i = 0; i < 4; i++) {
-            i11 += dNdKsi[point - 1][i] * b.nodes[i].x;
-            i21 += dNdEta[point - 1][i] * b.nodes[i].x;
-            i12 += dNdKsi[point - 1][i] * b.nodes[i].y;
-            i22 += dNdEta[point - 1][i] * b.nodes[i].y;
-            /*i11+=dNdKsi[i]*b.nodes[i].x;
-            i21+=dNdEta[i]*b.nodes[i].x;
-            i12+=dNdKsi[i]*b.nodes[i].y;
-            i22+=dNdEta[i]*b.nodes[i].y;*/
-        }
-        jacobian[0] = i11;
-        jacobian[1] = i12;
-        jacobian[2] = i21;
-        jacobian[3] = i22;
-        /*cout<<"JACOBIAN ARRAY:\n";
-        for(int j=0;j<4;j++){
-           cout<<jacobian[j]<<"\t";
-        }
-        cout<<endl;*/
-        det = (i11 * i22) - (i12 * i21);
-        reversedJacobian[0] = jacobian[3] / det;
-        reversedJacobian[1] = jacobian[1] / det;
-        reversedJacobian[2] = jacobian[2] / det;
-        reversedJacobian[3] = jacobian[0] / det;
-        /*cout << "dNdKsi:\n";
-        displayArray(dNdKsi);
-        cout << "dNdEta:\n";
-        displayArray(dNdEta);*/
-
         vector<vector<double>> dNdX = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-        for (int a = 0; a < 4; a++) {
-            dNdX[0][a] = (dNdKsi[0][a] * reversedJacobian[0] + dNdEta[0][a] * reversedJacobian[1]);//git
-            dNdX[1][a] = (dNdKsi[1][a] * reversedJacobian[0] + dNdEta[1][a] * reversedJacobian[1]);//git
-            dNdX[2][a] = (dNdKsi[2][a] * reversedJacobian[0] + dNdEta[2][a] * reversedJacobian[1]);//git
-            dNdX[3][a] = (dNdKsi[3][a] * reversedJacobian[0] + dNdEta[3][a] * reversedJacobian[1]);//git
-        }
-
         vector<vector<double>> dNdY = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-        for (int a = 0; a < 4; a++) {
-            dNdY[0][a] = (dNdKsi[0][a] * reversedJacobian[2] + dNdEta[0][a] * reversedJacobian[3]);//git
-            dNdY[1][a] = (dNdKsi[1][a] * reversedJacobian[2] + dNdEta[1][a] * reversedJacobian[3]);//git
-            dNdY[2][a] = (dNdKsi[2][a] * reversedJacobian[2] + dNdEta[2][a] * reversedJacobian[3]);//git
-            dNdY[3][a] = (dNdKsi[3][a] * reversedJacobian[2] + dNdEta[3][a] * reversedJacobian[3]);//git
-        }
-
         vector<vector<double>> dNdXT = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
@@ -382,21 +331,6 @@ public:
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-        for (int a = 0; a < 4; a++) {
-            for (int b = 0; b < 4; b++) {
-                dNdXT[a][b] = dNdX[b][a];
-                dNdYT[a][b] = dNdY[b][a];
-            }
-        }
-        /*cout << "dNdX:\n";
-        displayArray(dNdX);
-        cout << "dNdXT:\n";
-        displayArray(dNdXT);
-        cout << "dNdY:\n";
-        displayArray(dNdY);
-        cout << "dNdYT:\n";
-        displayArray(dNdYT);*/
-
         vector<vector<double>> multipliedX = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
@@ -409,55 +343,108 @@ public:
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
+        vector<vector<double>> tempH = {
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}
+        };
+        for(int point=1;point<=4;point++) {
 
-
-        //WERSJA NR 2
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                multipliedX[i][j] = dNdX[point - 1][j] * dNdXT[i][point - 1];
+            for (int i = 0; i < 4; i++) {
+                i11 += dNdKsi[point - 1][i] * b.nodes[i].x;
+                i21 += dNdEta[point - 1][i] * b.nodes[i].x;
+                i12 += dNdKsi[point - 1][i] * b.nodes[i].y;
+                i22 += dNdEta[point - 1][i] * b.nodes[i].y;
             }
-        }
-        //displayArray(multipliedX);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                multipliedY[i][j] = dNdY[point - 1][j] * dNdYT[i][point - 1];
+            jacobian[0] = i11;
+            jacobian[1] = i12;
+            jacobian[2] = i21;
+            jacobian[3] = i22;
+
+            det = (i11 * i22) - (i12 * i21);
+            reversedJacobian[0] = jacobian[3] / det;
+            reversedJacobian[1] = jacobian[1] / det;
+            reversedJacobian[2] = jacobian[2] / det;
+            reversedJacobian[3] = jacobian[0] / det;
+
+            for (int a = 0; a < 4; a++) {
+                dNdX[0][a] = (dNdKsi[0][a] * reversedJacobian[0] + dNdEta[0][a] * reversedJacobian[1]);//git
+                dNdX[1][a] = (dNdKsi[1][a] * reversedJacobian[0] + dNdEta[1][a] * reversedJacobian[1]);//git
+                dNdX[2][a] = (dNdKsi[2][a] * reversedJacobian[0] + dNdEta[2][a] * reversedJacobian[1]);//git
+                dNdX[3][a] = (dNdKsi[3][a] * reversedJacobian[0] + dNdEta[3][a] * reversedJacobian[1]);//git
             }
-        }
-        //displayArray(multipliedY);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                H[i][j] = 30 * det * (multipliedX[i][j] + multipliedY[i][j]);//*det*30;
+
+
+            for (int a = 0; a < 4; a++) {
+                dNdY[0][a] = (dNdKsi[0][a] * reversedJacobian[2] + dNdEta[0][a] * reversedJacobian[3]);//git
+                dNdY[1][a] = (dNdKsi[1][a] * reversedJacobian[2] + dNdEta[1][a] * reversedJacobian[3]);//git
+                dNdY[2][a] = (dNdKsi[2][a] * reversedJacobian[2] + dNdEta[2][a] * reversedJacobian[3]);//git
+                dNdY[3][a] = (dNdKsi[3][a] * reversedJacobian[2] + dNdEta[3][a] * reversedJacobian[3]);//git
             }
+
+
+            for (int a = 0; a < 4; a++) {
+                for (int b = 0; b < 4; b++) {
+                    dNdXT[a][b] = dNdX[b][a];
+                    dNdYT[a][b] = dNdY[b][a];
+                }
+            }
+            /*cout<<"JACOBIAN ARRAY:\n";
+            for(int j=0;j<4;j++){
+               cout<<jacobian[j]<<"\t";
+            }
+            cout<<endl;*/
+            /*cout << "dNdKsi:\n";
+            displayArray(dNdKsi);
+            cout << "dNdEta:\n";
+            displayArray(dNdEta);
+            cout << "dNdX:\n";
+            displayArray(dNdX);
+            cout << "dNdXT:\n";
+            displayArray(dNdXT);
+            cout << "dNdY:\n";
+            displayArray(dNdY);
+            cout << "dNdYT:\n";
+            displayArray(dNdYT);*/
+
+            //WERSJA NR 2
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    multipliedX[i][j] = dNdX[point - 1][j] * dNdXT[i][point - 1];
+                }
+            }
+            //displayArray(multipliedX);
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    multipliedY[i][j] = dNdY[point - 1][j] * dNdYT[i][point - 1];
+                }
+            }
+            //displayArray(multipliedY);
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    tempH[i][j] = 30 * det * (multipliedX[i][j] + multipliedY[i][j]);//*det*30;
+                }
+            }
+            b.H=sumVectors4x4(b.H,tempH,b.H);
         }
-
-        cout << point << " punkt calkowania - macierz H:\n";
-        displayArray(H);
-
-
-        return H;
+        //displayArray(b.H);
+        return b.H;
     }
 };
-vector<vector<double>> sumVectors4x4(vector<vector<double>> a,vector<vector<double>> b,vector<vector<double>> result){
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            result[i][j]=a[i][j]+b[i][j];
-        }
-    }
-    return result;
-};
+
 
 int main()
 {
-    //FEMGrid a;
+    FEMGrid grid;
 
-    /*cout<<"______________________________\n";
+    cout<<"______________________________\n";
     double calka=gaussQuadrature2D(2);
     cout<<endl<<calka<<endl<<endl;
-    cout<<"______________________________\n";*/
-    Elem4 b;
-    Element c(0,4,4,0,0,0,6,6);
-    vector<double> x={0,4,4,0};
-    vector<double> y={0,0,6,6};
+    cout<<"______________________________\n";
+
+    Elem4 elem4;
+    Element elem(0,4,4,0,0,0,6,6);
 
     vector<vector<double>> result={
             {0, 0, 0, 0},
@@ -465,33 +452,19 @@ int main()
             {0, 0, 0, 0},
             {0, 0, 0, 0}
     };
-    vector<vector<double>> temp{
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 0, 0, 0}
-    };
+    result = elem4.elem4solve(elem);
 
-    for(int z=1;z<=4;z++) {
-        temp = b.elem4solve(z, c, x, y);
-        result = sumVectors4x4(temp, result, result);
-        temp = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-    }
 
-    for (int a = 0; a < 4; a++) {
-        for (int b = 0; b < 4; b++) {
-            cout << result[a][b] << "\t";
-        }
+    cout<<"\nMacierz H :\n";
+    displayArray(result);
+
+    cout<<"______________________________\n";
+
+    for(int a=0;a<12;a++) {
+        grid.arrE[a].H = elem4.elem4solve(grid.arrE[a]);
+        grid.arrE[a].displayElement();
         cout << endl;
     }
-    cout<<endl<<endl;
-
-
 
     return 0;
 }
