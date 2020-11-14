@@ -239,6 +239,7 @@ double gaussQuadrature2D(const int k){
     return -1;
 }
 void displayArray(vector<vector<double>> c) {
+    cout.precision(3);
     for (int a = 0; a < 4; a++) {
         for (int b = 0; b < 4; b++) {
             cout << c[a][b] << "\t";
@@ -247,23 +248,8 @@ void displayArray(vector<vector<double>> c) {
     }
     cout<<endl<<endl;
 }
-/*void multiply4x4Arrays(<vector<vector<double>> a,,<vector<vector<double>> b,<vector<vector<double>> c){
-        //(double a[][],double b[][],double c[][]){
-    double sum=0;
-    for(int i=0;i<4;i++){
-        for(int j=0;j<4;j++){
-            for(int k=0;k<4;k++){
-                sum+=a[i][k]*b[k][j];
-            }
-            c[i][j]=sum;
-            sum=0;
-        }
-    }
-    return ;
-}*/
-class Elem4 {
-    friend double elem4solve(Elem4 a, Element b);
 
+class Elem4 {
 public:
     double ksi[4] = {(-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3)), (-1 / sqrt(3))};
     double eta[4] = {(-1 / sqrt(3)), (-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3))};
@@ -271,6 +257,12 @@ public:
     double jacobian[2][2] = {0};
     double reversedJacobian[2][2] = {0};
     double det = 0;
+    vector<vector<double>> H = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
     vector<vector<double>> dNdKsi
             {
                     {(-0.25 * (1 - eta[0])), (0.25 * (1 - eta[0])), (0.25 * (1 + eta[0])), (-0.25 * (1 + eta[0]))},
@@ -294,7 +286,7 @@ public:
             {
                     {(-0.25*(1-ksi[0])),(-0.25*(1+ksi[0])),(0.25*(1+ksi[0])),(0.25*(1-ksi[0]))}
             };*/
-    double elem4solve(int point, Element b, vector<double> x, vector<double> y) {
+    vector<vector<double>> elem4solve(int point, Element b, vector<double> x, vector<double> y) {
         /*cout<<"ETA:\n";
         for(int a=0;a<4;a++) {
             for (int b = 0; b < 4; b++) {
@@ -347,10 +339,10 @@ public:
         reversedJacobian[1] = jacobian[1] / det;
         reversedJacobian[2] = jacobian[2] / det;
         reversedJacobian[3] = jacobian[0] / det;
-        cout << "dNdKsi:\n";
+        /*cout << "dNdKsi:\n";
         displayArray(dNdKsi);
         cout << "dNdEta:\n";
-        displayArray(dNdEta);
+        displayArray(dNdEta);*/
 
         vector<vector<double>> dNdX = {
                 {0, 0, 0, 0},
@@ -396,102 +388,110 @@ public:
                 dNdYT[a][b] = dNdY[b][a];
             }
         }
-        cout << "dNdX:\n";
+        /*cout << "dNdX:\n";
         displayArray(dNdX);
         cout << "dNdXT:\n";
         displayArray(dNdXT);
         cout << "dNdY:\n";
         displayArray(dNdY);
         cout << "dNdYT:\n";
-        displayArray(dNdYT);
+        displayArray(dNdYT);*/
 
-
-
-        //dodac mechanizm mnozenia macierzy, pomnozyc dndx*dndxt oraz dndy*dndyt,potem dodac te macierze wynikowe,
-        // potem pomnozyc dla xpc1 przez 30 idetJ
-
-        //pc1
         vector<vector<double>> multipliedX = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-
-        double sum=0;
-        cout<<"dNdX*dNdXT________________________________________________________________\n";
-        for(int i=0;i<4;i++){
-            for(int j=0;j<4;j++){
-                for(int k=0;k<4;k++){
-                    sum+=dNdX[i][k]*dNdXT[k][j];
-                }
-                multipliedX[i][j]=sum;
-                sum=0;
-            }
-        }
-        displayArray(multipliedX);
-
         vector<vector<double>> multipliedY = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-        cout<<"dNdY*dNdYT________________________________________________________________\n";
-        for(int i=0;i<4;i++){
-            for(int j=0;j<4;j++){
-                for(int k=0;k<4;k++){
-                    sum+=dNdY[i][k]*dNdYT[k][j];
-                }
-                multipliedY[i][j]=sum;
-                sum=0;
+
+
+        //WERSJA NR 2
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedX[i][j] = dNdX[point - 1][j] * dNdXT[i][point - 1];
             }
         }
-        displayArray(multipliedY);
+        //displayArray(multipliedX);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedY[i][j] = dNdY[point - 1][j] * dNdYT[i][point - 1];
+            }
+        }
+        //displayArray(multipliedY);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                H[i][j] = 30 * det * (multipliedX[i][j] + multipliedY[i][j]);//*det*30;
+            }
+        }
+
+        cout << point << " punkt calkowania - macierz H:\n";
+        displayArray(H);
 
 
-        vector<vector<double>> H = {
+        return H;
+    }
+};
+vector<vector<double>> sumVectors4x4(vector<vector<double>> a,vector<vector<double>> b,vector<vector<double>> result){
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            result[i][j]=a[i][j]+b[i][j];
+        }
+    }
+    return result;
+};
+
+int main()
+{
+    //FEMGrid a;
+
+    /*cout<<"______________________________\n";
+    double calka=gaussQuadrature2D(2);
+    cout<<endl<<calka<<endl<<endl;
+    cout<<"______________________________\n";*/
+    Elem4 b;
+    Element c(0,4,4,0,0,0,6,6);
+    vector<double> x={0,4,4,0};
+    vector<double> y={0,0,6,6};
+
+    vector<vector<double>> result={
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> temp{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+
+    for(int z=1;z<=4;z++) {
+        temp = b.elem4solve(z, c, x, y);
+        result = sumVectors4x4(temp, result, result);
+        temp = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
-        for(int i=0;i<4;i++) {
-            for (int j = 0; j < 4; j++) {
-                H[i][j]=(multipliedX[i][j]+multipliedY[i][j])*det*30;
-            }
-        }
-        cout<<"H________________________\n";
-        displayArray(H);
-
-
-
-
-
-
-        return det;
     }
-};
+
+    for (int a = 0; a < 4; a++) {
+        for (int b = 0; b < 4; b++) {
+            cout << result[a][b] << "\t";
+        }
+        cout << endl;
+    }
+    cout<<endl<<endl;
 
 
-int main()
-{
-    FEMGrid a;
-
-    //cout<<"______________________________\n";
-    double calka=gaussQuadrature2D(2);
-    cout<<endl<<calka<<endl<<endl;
-    //cout<<"______________________________\n";
-    Elem4 b;
-    Element c(0,4,4,0,0,0,6,6);
-    vector<double> x={0,4,4,0};
-    vector<double> y={0,0,6,6};
-    double det1=0;double det2=0;double det3=0;double det4=0;
-    det1=b.elem4solve(1,c,x,y);
-    //det2=b.elem4solve(2,c,x,y);
-    //det3=b.elem4solve(3,c,x,y);
-    //det4=b.elem4solve(4,c,x,y);
-    cout<<endl<<det1;//<<"\t"<<det2<<"\t"<<det3<<"\t"<<det4<<"\n";
 
     return 0;
 }

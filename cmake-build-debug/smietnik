@@ -1,0 +1,51 @@
+/*void multiply4x4Vectors(<vector<vector<double>> a,,<vector<vector<double>> b,<vector<vector<double>> c){
+        //(double a[][],double b[][],double c[][]){
+    double sum=0;
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            for(int k=0;k<4;k++){
+                sum+=a[i][k]*b[k][j];
+            }
+            c[i][j]=sum;
+            sum=0;
+        }
+    }
+    return ;
+}*/
+
+
+
+
+
+
+
+/*
+        //cout<<"dNdX*dNdXT\n";
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedX[i][j] = 0;
+                for (int k = 0; k < 4; k++) {
+                    multipliedX[i][j] += dNdX[i][k] * dNdXT[k][j];
+                }
+            }
+        }
+        //displayArray(multipliedX);
+
+
+        //cout<<"dNdY*dNdYT\n";
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedX[i][j] = 0;
+                for (int k = 0; k < 4; k++) {
+                    multipliedY[i][j] += dNdY[i][k] * dNdYT[k][j];
+                }
+            }
+        }
+        //displayArray(multipliedY);
+
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                H[i][j] = 30 * det * (multipliedX[i][j] + multipliedY[i][j]);//*det*30;
+            }
+        }*/
