@@ -3,29 +3,30 @@
 #include<string>
 #include<fstream>
 #include <cmath>
-#include <iomanip>
 using namespace std;
 /*STRUKTURA PLIKU
 1- szerokosc
 2- wysokosc
 3- ilosc wezlow w poziomie
-4- ilosc wezlow w pionie*/
-class Elem4;
-class Element;
-double elem4solve(Elem4 a,Element b);
-void displayArray(vector<vector<double>> c) {
+4- ilosc wezlow w pionie
+5- wspolczynnik przewodzenia ciepla
+6- schemat calkowania
+7- ro
+8- C
+9- t0*/
+void displayArray(vector<vector<double>> c,int size) {
     cout.precision(3);
-    for (int a = 0; a < 4; a++) {
-        for (int b = 0; b < 4; b++) {
+    for (int a = 0; a < size; a++) {
+        for (int b = 0; b < size; b++) {
             cout << c[a][b] << "\t";
         }
         cout << endl;
     }
     cout<<endl;
 }
-vector<vector<double>> sumVectors4x4(vector<vector<double>> a,vector<vector<double>> b,vector<vector<double>> result){
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+vector<vector<double>> sumVectors(vector<vector<double>> a,vector<vector<double>> b,vector<vector<double>> result){
+    for (int i = 0; i < a.size(); i++) {
+        for (int j = 0; j < a.size(); j++) {
             result[i][j]=a[i][j]+b[i][j];
         }
     }
@@ -36,26 +37,27 @@ class Node
 public:
     double x;
     double y;
-    void Multiply(double dw,double dh,double muldw,double muldh)//przypisanie wspolrzednych wezlom
+    int id;
+    double t0=100;
+    void Multiply(double dw,double dh,int muldw,int muldh)//przypisanie wspolrzednych wezlom
     {
         this->x=(dw*muldw);
         this->y=(dh*muldh);
-    }
-    void overwrite(Node a)
-    {
-        this->x=a.x;
-        this->y=a.y;
     }
     Node& operator=(const Node &a)
     {
         this->x=a.x;
         this->y=a.y;
+        this->id=a.id;
         return *this;
     }
     void displayNode()
     {
         cout.precision(3);
-        cout<<"x="<<this->x<<"\t\ty="<<this->y<<endl;
+        cout<<"\nx="<<this->x<<"\t\ty="<<this->y;
+    }
+    int returnId(){
+        return id;
     }
     Node(){};
     Node(double a,double b)
@@ -63,16 +65,29 @@ public:
         this->x=a;
         this->y=b;
     }
+    Node(double a,double b,int id)
+    {
+        this->x=a;
+        this->y=b;
+        this->id=id;
+    }
+
 };
-static int staticelemID=0;
+
 class Element
 {
-    friend double elem4solve(Elem4 a,Element b);
 public:
     int elemID;
+    static int staticElemID;
     vector <Node> nodes;
     vector <int> id;
-    vector<vector<double>> H = {
+    vector<vector<double>> H = {//zmiana ilosci punktow w elemencie - zmiana macierzy H i C
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> C = {
             {0, 0, 0, 0},
             {0, 0, 0, 0},
             {0, 0, 0, 0},
@@ -80,7 +95,7 @@ public:
     };
     Element()
     {
-        this->elemID=++staticelemID;
+        this->elemID=++staticElemID;
         this->nodes.push_back(Node(0,0));
         this->nodes.push_back(Node(0,0));
         this->nodes.push_back(Node(0,0));
@@ -92,7 +107,7 @@ public:
     }
     Element(double x1,double x2,double x3,double x4,double y1,double y2,double y3,double y4)
     {
-        this->elemID=++staticelemID;
+        this->elemID=++staticElemID;
         this->nodes.push_back(Node(x1,y1));
         this->nodes.push_back(Node(x2,y2));
         this->nodes.push_back(Node(x3,y3));
@@ -102,15 +117,26 @@ public:
         this->id.push_back(0);
         this->id.push_back(0);
     }
+    Element(Node a,Node b,Node c,Node d)
+    {
+        this->elemID=++staticElemID;
+        this->nodes.push_back(a);
+        this->nodes.push_back(b);
+        this->nodes.push_back(c);
+        this->nodes.push_back(d);
+        this->id.push_back(0);
+        this->id.push_back(0);
+        this->id.push_back(0);
+        this->id.push_back(0);
+    }
     void displayElement()
     {
-        cout.precision(2);
-        cout<<"Element: "<<this->elemID<<"\tPunkty calkowania:\n";
+        cout<<"\nElement: "<<this->elemID<<"\tPunkty calkowania:\n";
         for(int i=0;i<4;i++)
         {
-            cout<<"x: "<<this->nodes[i].x<<"\ty: "<<this->nodes[i].y<<endl;
+            cout<<"Node id:"<<this->nodes[i].id+1<<"  x: "<<this->nodes[i].x<<"\t\ty: "<<this->nodes[i].y<<endl;
         }
-        cout<<"Macierz H:\n";
+        /*cout<<"Macierz H:\n";
         cout.precision(3);
         for (int a = 0; a < 4; a++) {
             for (int b = 0; b < 4; b++) {
@@ -118,133 +144,134 @@ public:
             }
             cout << endl;
         }
-        cout<<endl;
-        return;
-    }
-
-    void overwriteID(int a)//przy tworzeniu siatki konieczna jest kontrola polozenia elementu(wiersz/kolumna)
-    {
-        this->id[0]=this->elemID;
-        this->id[1]=this->elemID+a;
-        this->id[2]=this->elemID+a+1;
-        this->id[3]=this->elemID+1;
+        cout<<endl;*/
     }
 };
+int Element::staticElemID=0;
 class GlobalData
 {
 public:
-    int W;//szeerokosc siatki
-    int H;//wysokosc siatki
+    double W;//szeerokosc siatki
+    double H;//wysokosc siatki
     int nH;//ilosc wezlow na H
     int nW;//ilosc wezlow na W
     int nE;//ilosc elementow
     int nN;//ilosc wezlow
     double dw; //W/nW-1
     double dh; //H/nH-1
+    int heatConductionIndex;//wsp przewodzenia ciepla
+    int schema;//schemat calkowania
+    double ro;
+    double c;
+    double t0; //temperatura poczatkowa w wezle
 
     GlobalData()
     {
-        string data[4]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
+        string data[9]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
         fstream file;
         file.open("DATA.txt", std::ios_base::in | std::ios_base::out);
-        for(int a=0;a<4;a++)
+        for(int a=0;a<9;a++)
         {
             getline(file, data[a]);
             //cout<<data[a]<<endl;
         }
         file.close();
         std::string::size_type sz;
-        W=stoi(data[0]);
-        H=stoi(data[1]);
+        double temp=stod(data[0]);
+        W=temp;
+        double temp2=stod(data[1]);
+        H=temp2;
         nW=stoi(data[2]);
         nH=stoi(data[3]);
+        heatConductionIndex=stoi(data[4]);
+        schema=stoi(data[5]);
         nE=(nH-1)*(nW-1);
         nN=nH*nW;
-        dw=(double)W/(nW-1);
-        dh=(double)H/(nH-1);
-        /*cout<<"\tODCZYT Z PLIKU:";
-        cout<<"\nSZEROKOSC:"<<W;
-        cout<<"\nWYSOKOSC:"<<H;
-        cout<<"\nILOSC WEZLOW NA 1 ODCINKU W:"<<nW;
-        cout<<"\nILOSC WEZLOW NA 1 ODCINKU H:"<<nH;
-        cout<<"\nILOSC ELEMENTOW:"<<nE;
-        cout<<"\ndw:"<<dw;
-        cout<<"\ndh:"<<dh<<endl<<endl;*/
+        dw=W/(nW-1);
+        dh=H/(nH-1);
+        double temp3=stod(data[6]);
+        double temp4=stod(data[7]);
+        double temp5=stod(data[8]);
+        ro=temp3;
+        c=temp4;
+        t0=temp5;
+
     }
 };
-
 class FEMGrid:public GlobalData
 {
 public:
     vector<Node> arrN;//nN
     vector<Element> arrE;//nE
-    friend class Elem4;
-
     FEMGrid() {
         GlobalData a;
+        cout << "\tODCZYT Z PLIKU:";
+        cout << "\nSZEROKOSC:" << W;
+        cout << "\nWYSOKOSC:" << H;
+        cout << "\nILOSC WEZLOW NA 1 ODCINKU W:" << nW;
+        cout << "\nILOSC WEZLOW NA 1 ODCINKU H:" << nH;
+        cout << "\nILOSC ELEMENTOW:" << nE;
+        cout << "\ndw:" << dw;
+        cout << "\ndh:" << dh;
+        cout << "\nWSP PRZEW CIEPLA:" << heatConductionIndex;
+        cout << "\nSCHEMAT CALKOWANIA:" << schema << "-PUNKTOWY";
+        cout << "\nRO:" << ro;
+        cout << "\nC:" << c;
+        cout << "\nT0:" << t0 << endl;
         int index = 0;
         for (int a = 0; a < nN; a++) {
             arrN.push_back(Node(0, 0));
             arrE.push_back(Element());
+            arrN[a].id = a;
         }
+        int dHtimes = 0;
+        int dWtimes = 0;
+        int c = 0;
+        for (int i = 0; i < nW; i++) {
+            dHtimes = 0;
+            for (int j = 0; j < nH; j++, c++) {
 
-        int temp = 0;//sposob na "oszukanie" multiply aby wezly.x z pierwszej kolumny byly wyzerowane
-        for (int a = 0, b = 0; a < this->nN; a++, b++)//Przypisanie wspolrzednych wezlom
-        {
-            if (a / nH == temp) {
-                //cout<<"MUL: temp="<<temp<<"\tb="<<b<<"\n"; //testy
-                arrN[a].Multiply(this->dw, this->dh, temp, b);
-            } else if (a / nH != temp) {
-                temp++;
-                b = 0;
-                //cout<<"MUL: temp="<<temp<<"\tb="<<b<<"\n"; //testy
-                arrN[a].Multiply(this->dw, this->dh, temp, b);
-            }
-            cout << "\nNode " << a + 1 << "\t\t";
-            arrN[a].displayNode();//wypisanie wezlow
-        }
-        //Przypisanie elementom siatki poszczegolne wezly
-        int numElements = 0;
-        int nextColumn = 0;//zmienna pomagajaca w "przeskakiwaniu" do nowej kolumny elementow siatki
-        for (int b = 0; b < this->nW - 1; b++,nextColumn++) {
-            //cout<<"\nNEXT\n"<<nextColumn;
-            for (int c = 0; c < this->nH - 1; c++, numElements++) {
-                /*cout<<"Element\t"<<numElements
-                <<"\tWezly:\t"<<numElements+nextColumn+1<<"\t"
-                <<numElements + this->nH + nextColumn+1<<"\t"
-                <<numElements + this->nH + 1 + nextColumn+1<<"\t"
-                <<numElements + 1 + nextColumn+1<<endl;*///testy
-                //wpisanie wspolrzednych wezlow do elementow
+                arrN[c].Multiply(dw, dh, dWtimes, dHtimes);
+                dHtimes++;
 
-                arrE[numElements].nodes[0].operator=(arrN[numElements+nextColumn]);
-                arrE[numElements].nodes[1].operator=(arrN[numElements+nextColumn+nH]);
-                arrE[numElements].nodes[2].operator=(arrN[numElements+nextColumn+nH+1]);
-                arrE[numElements].nodes[3].operator=(arrN[numElements+nextColumn+1]);
-                displayElementsData(numElements);
+                arrN[c].displayNode();
+
             }
+            dWtimes++;
         }
+        int temp = 0;
+        int temp2= 1;
+        for (int i = 0; i < nE; i++) {
+            arrE[i].nodes[0].operator=(arrN[i + temp]);
+            arrE[i].nodes[1].operator=(arrN[i + nH + temp]);
+            arrE[i].nodes[2].operator=(arrN[i + 1 + nH + temp]);
+            arrE[i].nodes[3].operator=(arrN[i + 1 + temp]);
+            arrE[i].displayElement();
+            temp2++;
+            if(temp2%nH==0){temp++;temp2=1;}
+        }
+        cout<<endl;
     }
-    void displayElementsData(int index)
+    void sumUpHglobal(vector<vector<double>> Hlocal,double HGlobal[16][16],int n,FEMGrid grid)//zalezne od siatki oraz typu elementu siatki!
     {
-        cout<<"\nElement "<<arrE[index].elemID<<endl;
-        arrE[index].nodes[0].displayNode();
-        arrE[index].nodes[1].displayNode();
-        arrE[index].nodes[2].displayNode();
-        arrE[index].nodes[3].displayNode();
-    }
-    int retArrElemSize(){
-        return this->arrE.size();
+        int ind1,ind2=0;
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                ind1=grid.arrE[n].nodes[i].returnId();//cout<<ind1<<endl;
+                ind2=grid.arrE[n].nodes[j].returnId();//cout<<ind2<<endl;
+                HGlobal[ind1][ind2] += Hlocal[i][j];
+            }
+        }
     }
 };
-
-
 double twoVariablesFunction(double x,double y)
 {
     //dla funkcji -5x^2y+2xy^2+10
     return (-5)*x*x*y+2*x*y*y+10;
 }
-double gaussQuadrature2D(const int k){
-
+double gaussQuadrature2D(int k){
     if(k==2 | k==3){
         double finalResult=0;
         double x,y=0;
@@ -277,13 +304,10 @@ double gaussQuadrature2D(const int k){
     return -1;
 }
 
-class Elem4 {
-public:
+vector<vector<double>> elem2solve(Element b) {
     double ksi[4] = {(-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3)), (-1 / sqrt(3))};
     double eta[4] = {(-1 / sqrt(3)), (-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3))};
     int weight[4] = {1, 1, 1, 1};
-    double jacobian[2][2] = {0};
-    double reversedJacobian[2][2] = {0};
     double det = 0;
     vector<vector<double>> dNdKsi
             {
@@ -299,173 +323,313 @@ public:
                     {(-0.25 * (1 - ksi[2])), (-0.25 * (1 + ksi[2])), (0.25 * (1 + ksi[2])), (0.25 * (1 - ksi[2]))},
                     {(-0.25 * (1 - ksi[3])), (-0.25 * (1 + ksi[3])), (0.25 * (1 + ksi[3])), (0.25 * (1 - ksi[3]))}
             };
-
-    vector<vector<double>> elem4solve(Element b) {
-        double jacobian[4] = {0, 0, 0, 0};
-        double reversedJacobian[4] = {0, 0, 0, 0};
-        double i11 = 0;
-        double i12 = 0;
-        double i21 = 0;
-        double i22 = 0;
-        vector<vector<double>> dNdX = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> dNdY = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> dNdXT = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> dNdYT = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> multipliedX = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> multipliedY = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        vector<vector<double>> tempH = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        for(int point=1;point<=4;point++) {
-
-            for (int i = 0; i < 4; i++) {
-                i11 += dNdKsi[point - 1][i] * b.nodes[i].x;
-                i21 += dNdEta[point - 1][i] * b.nodes[i].x;
-                i12 += dNdKsi[point - 1][i] * b.nodes[i].y;
-                i22 += dNdEta[point - 1][i] * b.nodes[i].y;
-            }
-            jacobian[0] = i11;
-            jacobian[1] = i12;
-            jacobian[2] = i21;
-            jacobian[3] = i22;
-
-            det = (i11 * i22) - (i12 * i21);
-            reversedJacobian[0] = jacobian[3] / det;
-            reversedJacobian[1] = jacobian[1] / det;
-            reversedJacobian[2] = jacobian[2] / det;
-            reversedJacobian[3] = jacobian[0] / det;
-
-            for (int a = 0; a < 4; a++) {
-                dNdX[0][a] = (dNdKsi[0][a] * reversedJacobian[0] + dNdEta[0][a] * reversedJacobian[1]);//git
-                dNdX[1][a] = (dNdKsi[1][a] * reversedJacobian[0] + dNdEta[1][a] * reversedJacobian[1]);//git
-                dNdX[2][a] = (dNdKsi[2][a] * reversedJacobian[0] + dNdEta[2][a] * reversedJacobian[1]);//git
-                dNdX[3][a] = (dNdKsi[3][a] * reversedJacobian[0] + dNdEta[3][a] * reversedJacobian[1]);//git
-            }
-
-
-            for (int a = 0; a < 4; a++) {
-                dNdY[0][a] = (dNdKsi[0][a] * reversedJacobian[2] + dNdEta[0][a] * reversedJacobian[3]);//git
-                dNdY[1][a] = (dNdKsi[1][a] * reversedJacobian[2] + dNdEta[1][a] * reversedJacobian[3]);//git
-                dNdY[2][a] = (dNdKsi[2][a] * reversedJacobian[2] + dNdEta[2][a] * reversedJacobian[3]);//git
-                dNdY[3][a] = (dNdKsi[3][a] * reversedJacobian[2] + dNdEta[3][a] * reversedJacobian[3]);//git
-            }
-
-
-            for (int a = 0; a < 4; a++) {
-                for (int b = 0; b < 4; b++) {
-                    dNdXT[a][b] = dNdX[b][a];
-                    dNdYT[a][b] = dNdY[b][a];
-                }
-            }
-            /*cout<<"JACOBIAN ARRAY:\n";
-            for(int j=0;j<4;j++){
-               cout<<jacobian[j]<<"\t";
-            }
-            cout<<endl;*/
-            /*cout << "dNdKsi:\n";
-            displayArray(dNdKsi);
-            cout << "dNdEta:\n";
-            displayArray(dNdEta);
-            cout << "dNdX:\n";
-            displayArray(dNdX);
-            cout << "dNdXT:\n";
-            displayArray(dNdXT);
-            cout << "dNdY:\n";
-            displayArray(dNdY);
-            cout << "dNdYT:\n";
-            displayArray(dNdYT);*/
-
-            //WERSJA NR 2
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    multipliedX[i][j] = dNdX[point - 1][j] * dNdXT[i][point - 1];
-                }
-            }
-            //displayArray(multipliedX);
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    multipliedY[i][j] = dNdY[point - 1][j] * dNdYT[i][point - 1];
-                }
-            }
-            //displayArray(multipliedY);
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 4; j++) {
-                    tempH[i][j] = 30 * det * (multipliedX[i][j] + multipliedY[i][j]);//*det*30;
-                }
-            }
-            b.H=sumVectors4x4(b.H,tempH,b.H);
-        }
-        //displayArray(b.H);
-        return b.H;
-    }
-};
-
-
-int main()
-{
-    FEMGrid grid;
-
-    cout<<"______________________________\n";
-    double calka=gaussQuadrature2D(2);
-    cout<<endl<<calka<<endl<<endl;
-    cout<<"______________________________\n";
-
-    Elem4 elem4;
-    Element elem(0,4,4,0,0,0,6,6);
-
-    vector<vector<double>> result={
+    double jacobian[4] = {0, 0, 0, 0};
+    double reversedJacobian[4] = {0, 0, 0, 0};
+    vector<vector<double>> dNdX = {
             {0, 0, 0, 0},
             {0, 0, 0, 0},
             {0, 0, 0, 0},
             {0, 0, 0, 0}
     };
-    result = elem4.elem4solve(elem);
+    vector<vector<double>> dNdY = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> dNdXT = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> dNdYT = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> multipliedX = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> multipliedY = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    vector<vector<double>> tempH = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    for (int i = 0; i < 4; i++) {
+        jacobian[0] += dNdKsi[0][i] * b.nodes[i].x;
+        jacobian[1] += dNdEta[1][i] * b.nodes[i].x;
+        jacobian[2] += dNdKsi[2][i] * b.nodes[i].y;
+        jacobian[3] += dNdEta[3][i] * b.nodes[i].y;
+    }
+    det = (jacobian[0] * jacobian[3]) - (jacobian[1] * jacobian[2]);
+    reversedJacobian[0] = jacobian[3] / det;
+    reversedJacobian[1] = jacobian[1] / det;
+    reversedJacobian[2] = jacobian[2] / det;
+    reversedJacobian[3] = jacobian[0] / det;
+    cout << "Element" << b.elemID << " \nDet:" << det << "\tJakobian:\n";
+    for (int j = 0; j < 4; j++) {
+        cout << jacobian[j] << "\t";
+    }
+    cout << endl;
 
+    for (int a = 0; a < 4; a++) {
+        dNdX[0][a] = (dNdKsi[0][a] * reversedJacobian[0] + dNdEta[0][a] * reversedJacobian[1]);//git
+        dNdX[1][a] = (dNdKsi[1][a] * reversedJacobian[0] + dNdEta[1][a] * reversedJacobian[1]);//git
+        dNdX[2][a] = (dNdKsi[2][a] * reversedJacobian[0] + dNdEta[2][a] * reversedJacobian[1]);//git
+        dNdX[3][a] = (dNdKsi[3][a] * reversedJacobian[0] + dNdEta[3][a] * reversedJacobian[1]);//git
+    }
+    for (int a = 0; a < 4; a++) {
+        dNdY[0][a] = (dNdKsi[0][a] * reversedJacobian[2] + dNdEta[0][a] * reversedJacobian[3]);//git
+        dNdY[1][a] = (dNdKsi[1][a] * reversedJacobian[2] + dNdEta[1][a] * reversedJacobian[3]);//git
+        dNdY[2][a] = (dNdKsi[2][a] * reversedJacobian[2] + dNdEta[2][a] * reversedJacobian[3]);//git
+        dNdY[3][a] = (dNdKsi[3][a] * reversedJacobian[2] + dNdEta[3][a] * reversedJacobian[3]);//git
+    }
+    for (int a = 0; a < 4; a++) {
+        for (int b = 0; b < 4; b++) {
+            dNdXT[a][b] = dNdX[b][a];
+            dNdYT[a][b] = dNdY[b][a];
+        }
+    }
+    for (int point = 1; point <= 4; point++) {
 
-    cout<<"\nMacierz H :\n";
-    displayArray(result);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedX[i][j] = dNdX[point - 1][j] * dNdXT[i][point - 1];
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                multipliedY[i][j] = dNdY[point - 1][j] * dNdYT[i][point - 1];
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                tempH[i][j] = 25 * det * (multipliedX[i][j] + multipliedY[i][j]);//wsp ma byc wczytywany z pliku!!!!
+            }
+        }
+        b.H = sumVectors(b.H, tempH, b.H);
+    }
+    cout << endl;
+    cout << "Element " << b.elemID << endl;
+    /*cout << "dNdKsi:\n";
+    displayArray(dNdKsi,4);
+    cout << "dNdEta:\n";
+    displayArray(dNdEta,4);
+    cout << "dNdX:\n";
+    displayArray(dNdX,4);
+    cout << "dNdXT:\n";
+    displayArray(dNdXT,4);
+    cout << "dNdY:\n";
+    displayArray(dNdY,4);
+    cout << "dNdYT:\n";
+    displayArray(dNdYT,4);
+    cout << "multipliedX:\n";
+    displayArray(multipliedX,4);
+    cout << "multipliedY:\n";
+    displayArray(multipliedY,4);*/
+    cout<<"Macierz H:\n";
+    displayArray(b.H, 4);
+    //sleep(1);
+    return b.H;
+}
+vector<vector<double>> elem3solve(Element b) {
+    double sq = sqrt(15) / 5;
+    double ksi[9] =
+            {-sq, 0, sq, -sq, 0,sq, -sq, 0, sq};//do poprawy
+    double eta[9] =
+            {-sq, -sq, -sq, 0, 0, 0, sq, sq, sq};//do poprawy
+    int weight[9] =
+            {25 / 81, 40 / 81, 25 / 81, 40 / 81, 64 / 81, 40 / 81, 25 / 81, 40 / 81, 25 / 81};
+    double jacobian[9][4] = {0};
+    double reversedJacobian[9][4] = {0};
+    double det[9] = {0};
+    vector<vector<double>> dNdKsi{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    vector<vector<double>> dNdEta{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
 
-    cout<<"______________________________\n";
+    for (int i = 0; i < 9; i++) {
+        dNdKsi[i][0] = -0.25 * (1 - eta[i]);
+        dNdKsi[i][1] = 0.25 * (1 - eta[i]);
+        dNdKsi[i][2] = 0.25 * (1 + eta[i]);
+        dNdKsi[i][3] = -0.25 * (1 + eta[i]);
+    }
+    for (int i = 0; i < 9; i++) {
+        dNdEta[i][0] = -0.25 * (1 - ksi[i]);
+        dNdEta[i][1] = -0.25 * (1 - ksi[i]);
+        dNdEta[i][2] = 0.25 * (1 + ksi[i]);
+        dNdEta[i][3] = 0.25 * (1 + ksi[i]);
+    }
+    vector<double> dXdEta = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dXdKsi = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dYdEta = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dYdKsi = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    for(int a=0;a<12;a++) {
-        grid.arrE[a].H = elem4.elem4solve(grid.arrE[a]);
-        grid.arrE[a].displayElement();
-        cout << endl;
+    
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            dXdKsi[i] += dNdKsi[i][j] * b.nodes[j].x;
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            dYdKsi[i] += dNdKsi[i][j] * b.nodes[j].y;
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            dXdEta[i] += dNdEta[i][j] * b.nodes[j].x;
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            dYdEta[i] += dNdEta[i][j] * b.nodes[j].y;
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        jacobian[i][0] = dXdKsi[i];
+        jacobian[i][1] = dYdKsi[i];
+        jacobian[i][2] = dXdEta[i];
+        jacobian[i][3] = dYdEta[i];
+    }
+    cout<<"Jakobian\n";
+    for(int i=0;i<9;i++)
+    {
+        for(int j=0;j<4;j++)
+        {
+            cout<<jacobian[i][j]<<"\t";
+        }
+        cout<<endl;
     }
 
-    return 0;
-}
+    for (int i = 0; i < 9; i++) {
+        det[i] = (jacobian[i][0] * jacobian[i][3]) - (jacobian[i][1] * jacobian[i][2]);
+        reversedJacobian[i][0] = (1 / det[i]) * jacobian[i][3];
+        reversedJacobian[i][1] = (1 / det[i]) * -jacobian[i][1];
+        reversedJacobian[i][2] = (1 / det[i]) * -jacobian[i][2];
+        reversedJacobian[i][3] = (1 / det[i]) * jacobian[i][0];
+    }
 
+
+    for(int i=0;i<9;i++)
+    {
+        for(int j=0;j<4;j++)
+        {
+            cout<<reversedJacobian[i][j]<<"\t";
+        }
+        cout<<endl;
+    }
+
+    vector<vector<double>> dNdX{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    vector<vector<double>> dNdY{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    vector<vector<double>> H{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},};
+
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 4; j++) {
+            dNdX[i][j] = (1 / det[i]) * (dNdKsi[i][j] * dYdEta[i] - dNdEta[i][j] * dYdKsi[i]);
+            dNdY[i][j] = (1 / det[i]) * (-dXdEta[i] * dNdKsi[i][j] + dXdKsi[i] * dNdEta[i][j]);
+        }
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                b.H[i][j] += weight[i] * det[i] * 25 * (dNdX[i][j] * dNdX[i][k] + dNdY[i][j] * dNdY[i][k]);
+            }
+        }
+    }
+    cout<<"\n\n\nMacierz H\n";
+    displayArray(b.H,4);
+    return b.H;
+}
+int main() {
+    FEMGrid grid;
+
+    /*cout << "______________________________\n";
+    double calka = gaussQuadrature2D(2);
+    cout << endl << calka << endl << endl;
+    cout << "______________________________\n";*/
+
+    //element testowy
+    /*vector<vector<double>> h={
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    Element test(0,4,4,0,0,0,6,6);
+    h=elem2solve(test);*/
+
+    //grid.arrE[0].H=elem2solve(grid.arrE[0]);
+    //displayArray(grid.arrE[0].H,4);
+
+
+    double Hglobal[16][16] = {0};
+    double Cglobal[16][16] = {0};
+    for (int a = 0; a < grid.nE; a++) {
+        grid.arrE[a].H = elem2solve(grid.arrE[a]);
+        cout << endl;
+        grid.sumUpHglobal(grid.arrE[a].H, Hglobal, a,grid);
+    }
+    for (int a = 0; a < 16; a++) {
+        for (int b = 0; b < 16; b++) {
+            cout << Hglobal[a][b] << "\t";
+        }
+        cout << endl;
+    }
+    //grid.arrE[0].H=elem3solve(grid.arrE[0]);
+    //displayArray(grid.arrE[0].H,4);
+
+}
