@@ -22,6 +22,7 @@ public:
     double ro;
     double c;
     double t0; //temperatura poczatkowa w wezle
+    double alfa;
     GlobalData();
 };
 class FEMGrid:public GlobalData

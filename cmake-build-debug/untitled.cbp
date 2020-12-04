@@ -80,12 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Arrays&amp;Vectors.cpp">
-			<Option target="untitled"/>
-		</Unit>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Arrays&amp;Vectors.h">
-			<Option target="untitled"/>
-		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp">
 			<Option target="untitled"/>
 		</Unit>
@@ -96,6 +90,12 @@
 			<Option target="untitled"/>
 		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Element.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Functions.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Functions.h">
 			<Option target="untitled"/>
 		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp">

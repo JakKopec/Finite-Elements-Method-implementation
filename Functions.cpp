@@ -1,4 +1,4 @@
-#include"Arrays&Vectors.h"
+#include"Functions.h"
 void displayArray(vector<vector<double>> c,int size) {
     cout.precision(3);
     for (int a = 0; a < size; a++) {

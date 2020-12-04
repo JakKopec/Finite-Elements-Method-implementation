@@ -1,5 +1,5 @@
-#ifndef UNTITLED_ARRAYS_VECTORS_H
-#define UNTITLED_ARRAYS_VECTORS_H
+#ifndef UNTITLED_FUNCTIONS_H
+#define UNTITLED_FUNCTIONS_H
 #include<vector>
 #include<iostream>
 #include "GlobalData.h"
@@ -22,4 +22,5 @@ struct LocalMatrixElem2{
 };
 vector<vector<double>> sumUpHglobal(vector<vector<double>> Hlocal,vector<vector<double>> HGlobal,int n,FEMGrid grid);//zalezne od siatki oraz typu elementu siatki!
 
-#endif //UNTITLED_ARRAYS_VECTORS_H
+
+#endif //UNTITLED_FUNCTIONS_H

@@ -7,15 +7,16 @@
 6- schemat calkowania
 7- ro
 8- C
-9- t0*/
+9- t0
+10- alfa*/
 #include "GlobalData.h"
-#include "Arrays&Vectors.h"
+#include "Functions.h"
 
 GlobalData::GlobalData() {
-    string data[9]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
+    string data[10]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
     fstream file;
     file.open("DATA.txt", std::ios_base::in | std::ios_base::out);
-    for (int a = 0; a < 9; a++) {
+    for (int a = 0; a < 10; a++) {
         getline(file, data[a]);
         //cout<<data[a]<<endl;
     }
@@ -36,9 +37,11 @@ GlobalData::GlobalData() {
     double temp3 = stod(data[6]);
     double temp4 = stod(data[7]);
     double temp5 = stod(data[8]);
+    double temp6 = stod(data[9]);
     ro = temp3;
     c = temp4;
     t0 = temp5;
+    alfa=temp6;
 
 }
 
@@ -56,7 +59,8 @@ FEMGrid::FEMGrid() {
     cout << "\nSCHEMAT CALKOWANIA:" << schema << "-PUNKTOWY";
     cout << "\nRO:" << ro;
     cout << "\nC:" << c;
-    cout << "\nT0:" << t0 << endl;
+    cout << "\nT0:" << t0;
+    cout << "\nALFA:" << alfa << endl;
     int index = 0;
     for (int a = 0; a < nN; a++) {
         arrN.push_back(Node(0, 0));
@@ -75,6 +79,14 @@ FEMGrid::FEMGrid() {
         }
         dWtimes++;
     }
+    for (int i = 0; i < nN; i++) {
+        arrN[i].t0 = this->t0;
+        if (arrN[i].x == 0 || arrN[i].x == W || arrN[i].y == H || arrN[i].y == 0) {
+            arrN[i].bc = true;
+        }
+        arrN[i].displayNode();
+    }
+
     int temp = 0;
     int temp2 = 1;
     for (int i = 0; i < nE; i++) {
@@ -102,3 +114,5 @@ FEMGrid::FEMGrid() {
     CGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));
     HGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));
 }
+
+

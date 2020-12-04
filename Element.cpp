@@ -42,6 +42,12 @@ void Element::displayElement() {
     for (int i = 0; i < 4; i++) {
         cout.precision(1);
         cout << "Node id:" << this->nodes[i].id + 1 << "  x: " << this->nodes[i].x << "\t\ty: " << this->nodes[i].y<< endl;
+        for(int j=0;j<4;j++)
+        {
+            cout<<"BC flag:"<<this->nodes[j].bc<<"\t";
+        }
+        cout<<endl;
     }
+
 }
 int Element::staticElemID=0;

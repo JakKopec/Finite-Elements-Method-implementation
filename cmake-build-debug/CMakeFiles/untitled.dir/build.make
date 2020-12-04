@@ -128,18 +128,18 @@ CMakeFiles/untitled.dir/GlobalData.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/GlobalData.cpp.s"
 	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\GlobalData.cpp -o CMakeFiles\untitled.dir\GlobalData.cpp.s
 
-CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj: CMakeFiles/untitled.dir/flags.make
-CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj: ../Arrays&Vectors.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj"
-	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.obj" -c "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp"
+CMakeFiles/untitled.dir/Functions.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/Functions.cpp.obj: ../Functions.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/untitled.dir/Functions.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\Functions.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\Functions.cpp
 
-CMakeFiles/untitled.dir/Arrays&Vectors.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/Arrays&Vectors.cpp.i"
-	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp" > "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.i"
+CMakeFiles/untitled.dir/Functions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/Functions.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\Functions.cpp > CMakeFiles\untitled.dir\Functions.cpp.i
 
-CMakeFiles/untitled.dir/Arrays&Vectors.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Arrays&Vectors.cpp.s"
-	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp" -o "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.s"
+CMakeFiles/untitled.dir/Functions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Functions.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\Functions.cpp -o CMakeFiles\untitled.dir\Functions.cpp.s
 
 CMakeFiles/untitled.dir/ElemSolve.cpp.obj: CMakeFiles/untitled.dir/flags.make
 CMakeFiles/untitled.dir/ElemSolve.cpp.obj: ../ElemSolve.cpp
@@ -160,7 +160,7 @@ untitled_OBJECTS = \
 "CMakeFiles/untitled.dir/Node.cpp.obj" \
 "CMakeFiles/untitled.dir/Element.cpp.obj" \
 "CMakeFiles/untitled.dir/GlobalData.cpp.obj" \
-"CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj" \
+"CMakeFiles/untitled.dir/Functions.cpp.obj" \
 "CMakeFiles/untitled.dir/ElemSolve.cpp.obj"
 
 # External object files for target untitled
@@ -170,7 +170,7 @@ untitled.exe: CMakeFiles/untitled.dir/main.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/Node.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/Element.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/GlobalData.cpp.obj
-untitled.exe: CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/Functions.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/ElemSolve.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/build.make
 untitled.exe: CMakeFiles/untitled.dir/linklibs.rsp

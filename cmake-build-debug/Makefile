@@ -142,33 +142,6 @@ untitled/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/build
 .PHONY : untitled/fast
 
-Arrays&Vectors.obj: Arrays&Vectors.cpp.obj
-
-.PHONY : Arrays&Vectors.obj
-
-# target to build an object file
-Arrays&Vectors.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make "CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj"
-.PHONY : Arrays&Vectors.cpp.obj
-
-Arrays&Vectors.i: Arrays&Vectors.cpp.i
-
-.PHONY : Arrays&Vectors.i
-
-# target to preprocess a source file
-Arrays&Vectors.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make "CMakeFiles/untitled.dir/Arrays&Vectors.cpp.i"
-.PHONY : Arrays&Vectors.cpp.i
-
-Arrays&Vectors.s: Arrays&Vectors.cpp.s
-
-.PHONY : Arrays&Vectors.s
-
-# target to generate assembly for a file
-Arrays&Vectors.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make "CMakeFiles/untitled.dir/Arrays&Vectors.cpp.s"
-.PHONY : Arrays&Vectors.cpp.s
-
 ElemSolve.obj: ElemSolve.cpp.obj
 
 .PHONY : ElemSolve.obj
@@ -222,6 +195,33 @@ Element.s: Element.cpp.s
 Element.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Element.cpp.s
 .PHONY : Element.cpp.s
+
+Functions.obj: Functions.cpp.obj
+
+.PHONY : Functions.obj
+
+# target to build an object file
+Functions.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Functions.cpp.obj
+.PHONY : Functions.cpp.obj
+
+Functions.i: Functions.cpp.i
+
+.PHONY : Functions.i
+
+# target to preprocess a source file
+Functions.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Functions.cpp.i
+.PHONY : Functions.cpp.i
+
+Functions.s: Functions.cpp.s
+
+.PHONY : Functions.s
+
+# target to generate assembly for a file
+Functions.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Functions.cpp.s
+.PHONY : Functions.cpp.s
 
 GlobalData.obj: GlobalData.cpp.obj
 
@@ -313,15 +313,15 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... untitled
-	@echo ... Arrays&Vectors.obj
-	@echo ... Arrays&Vectors.i
-	@echo ... Arrays&Vectors.s
 	@echo ... ElemSolve.obj
 	@echo ... ElemSolve.i
 	@echo ... ElemSolve.s
 	@echo ... Element.obj
 	@echo ... Element.i
 	@echo ... Element.s
+	@echo ... Functions.obj
+	@echo ... Functions.i
+	@echo ... Functions.s
 	@echo ... GlobalData.obj
 	@echo ... GlobalData.i
 	@echo ... GlobalData.s

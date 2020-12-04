@@ -3,7 +3,7 @@
 
 #include "Element.h"
 #include "GlobalData.h"
-#include "Arrays&Vectors.h"
+#include "Functions.h"
 
 LocalMatrixElem2 elem2solve(Element b, FEMGrid grid);
 LocalMatrixElem2 elem3solve(Element b,FEMGrid grid);

@@ -97,10 +97,10 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     }
     det = (jacobian[0] * jacobian[3]) - (jacobian[1] * jacobian[2]);
     reversedJacobian[0] = jacobian[3] / det;
-    reversedJacobian[1] = (-1)*jacobian[1] / det;
-    reversedJacobian[2] = (-1)*jacobian[2] / det;
+    reversedJacobian[1] = jacobian[1] / det;
+    reversedJacobian[2] = jacobian[2] / det;
     reversedJacobian[3] = jacobian[0] / det;
-    cout << "Element" << b.elemID << " \nDet:" << det << "\tJakobian:\n";
+    cout << "Element " << b.elemID << " \nDet:" << det << "\tJakobian:\n";
     for (int j = 0; j < 4; j++) {
         cout << jacobian[j] << "\t";
     }
@@ -127,10 +127,10 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
 
 
     for (int i = 0; i < 4; i++) {
-        N[i][0] = (0.25 * (1 - ksi[i]) * (1 - eta[i]));
-        N[i][1] = (0.25 * (1 + ksi[i]) * (1 - eta[i]));
+        N[i][0] = (0.25 * (1 + ksi[i]) * (1 + eta[i]));
+        N[i][1] = (0.25 * (1 + ksi[i]) * (1 + eta[i]));
         N[i][2] = (0.25 * (1 + ksi[i]) * (1 + eta[i]));
-        N[i][3] = (0.25 * (1 - ksi[i]) * (1 + eta[i]));
+        N[i][3] = (0.25 * (1 + ksi[i]) * (1 + eta[i]));
     }
 
     for (int a = 0; a < 4; a++) {
@@ -148,29 +148,88 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
         }
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                tempH[i][j] = grid.heatConductionIndex * det * (multipliedX[i][j] + multipliedY[i][j])* weight[point-1];
+                tempH[i][j] =
+                        grid.heatConductionIndex * det * (multipliedX[i][j] + multipliedY[i][j]) * weight[point - 1];
             }
         }
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 tempC[i][j] = det * grid.ro * grid.c * (N[point - 1][j] * NT[i][point - 1]);
-                cout<<tempC[i][j]<<"\t";
+                //cout << tempC[i][j] << "\t";
             }
-            cout<<endl;
+            //cout << endl;
         }
-        cout<<endl;
+        //cout << endl;
         b.H = sumVectors(b.H, tempH);
         b.C = sumVectors(b.C, tempC);
-
-        /*int s;
-        for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++) {
-                s = 0;
-                for (int k = 0; k < 4; k++) { s += N[i][k] * NT[k][j]; }
-                C[i][j] = (grid.ro * grid.c) * s;
-                cout<<grid.ro<<"\t"<<grid.c<<"\t"<<s<<"\n";
-            }*/
     }
+    vector<double> NBc1={0,0,0,0};
+    vector<double> NBc2={0,0,0,0};
+    vector<vector<double>> HBc = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}
+    };
+    int sq=1/sqrt(3);
+    if (b.nodes[0].bc == true && b.nodes[1].bc == true) {
+        NBc1[0]=0.5*(1+sq);
+        NBc1[1]=0.5*(1+sq);
+        NBc2[0]=NBc1[0];
+        NBc2[1]=NBc1[1];
+        for(int i=0;i<4;i++) {
+            for (int j = 0; j < 4; j++) {
+                HBc[i][j]+=(NBc1[j]*NBc2[i]);
+            }
+        }
+        NBc1={0,0,0,0};
+        NBc2={0,0,0,0};
+    }
+    if (b.nodes[1].bc == true && b.nodes[2].bc == true) {
+        NBc1[1]=0.5*(1+sq);
+        NBc1[2]=0.5*(1+sq);
+        NBc2[1]=NBc1[1];
+        NBc2[2]=NBc1[2];
+        for(int i=0;i<4;i++) {
+            for (int j = 0; j < 4; j++) {
+                HBc[i][j]+=(NBc1[j]*NBc2[i]);
+            }
+        }
+        NBc1={0,0,0,0};
+        NBc2={0,0,0,0};
+    }
+    if (b.nodes[2].bc == true && b.nodes[3].bc == true) {
+        NBc1[2]=0.5*(1+sq);
+        NBc1[3]=0.5*(1+sq);
+        NBc2[2]=NBc1[2];
+        NBc2[3]=NBc1[3];
+        for(int i=0;i<4;i++) {
+            for (int j = 0; j < 4; j++) {
+                HBc[i][j]+=(NBc1[j]*NBc2[i]);
+            }
+        }
+        NBc1={0,0,0,0};
+        NBc2={0,0,0,0};
+    }
+    if (b.nodes[0].bc == true && b.nodes[3].bc == true) {
+        NBc1[0]=0.5*(1+sq);
+        NBc1[3]=0.5*(1+sq);
+        NBc2[0]=NBc1[0];
+        NBc2[3]=NBc1[3];
+        for(int i=0;i<4;i++) {
+            for (int j = 0; j < 4; j++) {
+                HBc[i][j]+=(NBc1[j]*NBc2[i]);
+            }
+        }
+        NBc1={0,0,0,0};
+        NBc2={0,0,0,0};
+    }
+    for(int i=0;i<4;i++) {
+        for (int j = 0; j < 4; j++) {
+            HBc[i][j]*=(grid.alfa*det);//0.5*grid.W
+        }
+    }
+
     /*cout << endl;
     cout << "Element " << b.elemID << endl;
     cout << "dNdKsi:\n";
@@ -188,12 +247,13 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     cout << "multipliedX:\n";
     displayArray(multipliedX,4);
     cout << "multipliedY:\n";
-    displayArray(multipliedY,4);*/
+    displayArray(multipliedY,4);
     cout << "Macierz H:\n";
     displayArray(b.H, 4);
     cout << "Macierz C:\n";
-    displayArray(b.C, 4);
-
+    displayArray(b.C, 4);*/
+    cout<<"HBC\n";
+    displayArray(HBc);
 
     LocalMatrixElem2 localMatrixElem2;
     for(int i=0;i<4;i++)
