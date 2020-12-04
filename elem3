@@ -1,0 +1,162 @@
+LocalMatrixElem2 elem3solve(Element b) {
+    double sq = sqrt(15) / 5;
+    double ksi[9] =
+            {-sq, 0, sq, -sq, 0, sq, -sq, 0, sq};//do poprawy
+    double eta[9] =
+            {-sq, -sq, -sq, 0, 0, 0, sq, sq, sq};//do poprawy
+    int weight[9] =
+            {25 / 81, 40 / 81, 25 / 81, 40 / 81, 64 / 81, 40 / 81, 25 / 81, 40 / 81, 25 / 81};
+    vector<vector<double>> jacobian{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    vector<vector<double>> reversedJacobian = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    double det[9] = {0};
+    vector<vector<double>> dNdKsi{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+    vector<vector<double>> dNdEta{
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0},
+            {0, 0, 0, 0}};
+
+    for (int i = 0; i < 9; i++) {
+        dNdKsi[i][0] = -0.25 * (1 - eta[i]);
+        dNdKsi[i][1] = 0.25 * (1 - eta[i]);
+        dNdKsi[i][2] = 0.25 * (1 + eta[i]);
+        dNdKsi[i][3] = -0.25 * (1 + eta[i]);
+
+        dNdEta[i][0] = -0.25 * (1 - ksi[i]);
+        dNdEta[i][1] = -0.25 * (1 - ksi[i]);
+        dNdEta[i][2] = 0.25 * (1 + ksi[i]);
+        dNdEta[i][3] = 0.25 * (1 + ksi[i]);
+    }
+
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            jacobian[i][0] += dNdKsi[0][j] * b.nodes[j].x;
+            jacobian[i][1] += dNdEta[1][j] * b.nodes[j].x;
+            jacobian[i][2] += dNdKsi[2][j] * b.nodes[j].y;
+            jacobian[i][3] += dNdEta[3][j] * b.nodes[j].y;
+        }
+    }
+
+
+
+    /*vector<double> dXdEta = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dXdKsi = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dYdEta = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+    vector<double> dYdKsi = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            dXdKsi[i] += dNdKsi[i][j] * b.nodes[j].x;
+            dYdKsi[i] += dNdKsi[i][j] * b.nodes[j].y;
+            dXdEta[i] += dNdEta[i][j] * b.nodes[j].x;
+            dYdEta[i] += dNdEta[i][j] * b.nodes[j].y;
+        }
+    }
+
+    for (int i = 0; i < 9; i++) {
+        jacobian[i][0] = dXdKsi[i];
+        jacobian[i][1] = dYdKsi[i];
+        jacobian[i][2] = dXdEta[i];
+        jacobian[i][3] = dYdEta[i];
+    }*/
+    cout << "Jakobian\n";
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 4; j++) {
+            cout << jacobian[i][j] << "\t\t";
+        }
+        cout << endl;
+    }
+
+    for (int i = 0; i < 9; i++) {
+        det[i] = (jacobian[i][0] * jacobian[i][3]) - (jacobian[i][1] * jacobian[i][2]);
+        cout<<"DET:"<<det<<endl;
+        /*reversedJacobian[i][0] = (1 / det[i]) * jacobian[i][3];
+        reversedJacobian[i][1] = (1 / det[i]) * -jacobian[i][1];
+        reversedJacobian[i][2] = (1 / det[i]) * -jacobian[i][2];
+        reversedJacobian[i][3] = (1 / det[i]) * jacobian[i][0];*/
+    }
+
+
+
+/*
+        displayArray(reversedJacobian, 4);
+
+        vector<vector<double>> dNdX{
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}};
+        vector<vector<double>> dNdY{
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0}};
+        vector<vector<double>> H{
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},};
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                dNdX[i][j] = (1 / det[i]) * (dNdKsi[i][j] * dYdEta[i] - dNdEta[i][j] * dYdKsi[i]);
+                dNdY[i][j] = (1 / det[i]) * (-dXdEta[i] * dNdKsi[i][j] + dXdKsi[i] * dNdEta[i][j]);
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                for (int k = 0; k < 4; k++) {
+                    b.H[i][j] += weight[i] * det[i] * 25 * (dNdX[i][j] * dNdX[i][k] + dNdY[i][j] * dNdY[i][k]);
+                }
+            }
+        }
+        cout << "\n\n\nMacierz H\n";
+        displayArray(b.H, 4);*/
+    LocalMatrixElem2 localMatrixElem2;
+    for(int i=0;i<4;i++)
+    {
+        for(int j=0;j<4;j++) {
+            localMatrixElem2.H[i][j] = b.H[i][j];
+            localMatrixElem2.C[i][j] = b.C[i][j];
+        }
+    }
+    return localMatrixElem2;
+}

@@ -89,19 +89,94 @@ CMakeFiles/untitled.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/main.cpp.s"
 	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\main.cpp -o CMakeFiles\untitled.dir\main.cpp.s
 
+CMakeFiles/untitled.dir/Node.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/Node.cpp.obj: ../Node.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/untitled.dir/Node.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\Node.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\Node.cpp
+
+CMakeFiles/untitled.dir/Node.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/Node.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\Node.cpp > CMakeFiles\untitled.dir\Node.cpp.i
+
+CMakeFiles/untitled.dir/Node.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Node.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\Node.cpp -o CMakeFiles\untitled.dir\Node.cpp.s
+
+CMakeFiles/untitled.dir/Element.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/Element.cpp.obj: ../Element.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/untitled.dir/Element.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\Element.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\Element.cpp
+
+CMakeFiles/untitled.dir/Element.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/Element.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\Element.cpp > CMakeFiles\untitled.dir\Element.cpp.i
+
+CMakeFiles/untitled.dir/Element.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Element.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\Element.cpp -o CMakeFiles\untitled.dir\Element.cpp.s
+
+CMakeFiles/untitled.dir/GlobalData.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/GlobalData.cpp.obj: ../GlobalData.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/untitled.dir/GlobalData.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\GlobalData.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\GlobalData.cpp
+
+CMakeFiles/untitled.dir/GlobalData.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/GlobalData.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\GlobalData.cpp > CMakeFiles\untitled.dir\GlobalData.cpp.i
+
+CMakeFiles/untitled.dir/GlobalData.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/GlobalData.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\GlobalData.cpp -o CMakeFiles\untitled.dir\GlobalData.cpp.s
+
+CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj: ../Arrays&Vectors.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.obj" -c "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp"
+
+CMakeFiles/untitled.dir/Arrays&Vectors.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/Arrays&Vectors.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp" > "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.i"
+
+CMakeFiles/untitled.dir/Arrays&Vectors.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Arrays&Vectors.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "D:\Studia\Semestr5\Mes\untitled\Arrays&Vectors.cpp" -o "CMakeFiles\untitled.dir\Arrays&Vectors.cpp.s"
+
+CMakeFiles/untitled.dir/ElemSolve.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/ElemSolve.cpp.obj: ../ElemSolve.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/untitled.dir/ElemSolve.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\ElemSolve.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp
+
+CMakeFiles/untitled.dir/ElemSolve.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/ElemSolve.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp > CMakeFiles\untitled.dir\ElemSolve.cpp.i
+
+CMakeFiles/untitled.dir/ElemSolve.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/ElemSolve.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp -o CMakeFiles\untitled.dir\ElemSolve.cpp.s
+
 # Object files for target untitled
 untitled_OBJECTS = \
-"CMakeFiles/untitled.dir/main.cpp.obj"
+"CMakeFiles/untitled.dir/main.cpp.obj" \
+"CMakeFiles/untitled.dir/Node.cpp.obj" \
+"CMakeFiles/untitled.dir/Element.cpp.obj" \
+"CMakeFiles/untitled.dir/GlobalData.cpp.obj" \
+"CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj" \
+"CMakeFiles/untitled.dir/ElemSolve.cpp.obj"
 
 # External object files for target untitled
 untitled_EXTERNAL_OBJECTS =
 
 untitled.exe: CMakeFiles/untitled.dir/main.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/Node.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/Element.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/GlobalData.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/Arrays&Vectors.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/ElemSolve.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/build.make
 untitled.exe: CMakeFiles/untitled.dir/linklibs.rsp
 untitled.exe: CMakeFiles/untitled.dir/objects1.rsp
 untitled.exe: CMakeFiles/untitled.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable untitled.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable untitled.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\untitled.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

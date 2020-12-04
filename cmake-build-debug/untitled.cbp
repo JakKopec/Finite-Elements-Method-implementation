@@ -80,6 +80,36 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Arrays&amp;Vectors.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Arrays&amp;Vectors.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Element.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Element.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/GlobalData.h">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Node.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Node.h">
+			<Option target="untitled"/>
+		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/main.cpp">
 			<Option target="untitled"/>
 		</Unit>
