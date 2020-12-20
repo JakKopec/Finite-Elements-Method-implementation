@@ -1,7 +1,3 @@
-//
-// Created by Lasiuk on 04.12.2020.
-//
-
 #include "Element.h"
 Element::Element() {
     this->elemID = ++staticElemID;

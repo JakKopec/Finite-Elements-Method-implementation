@@ -47,4 +47,13 @@ vector<vector<double>> sumUpHglobal(vector<vector<double>> Hlocal,vector<vector<
     //displayArray(HGlobal);
     return HGlobal;
 }
-
+vector<double> sumUpPglobal(vector<double> Plocal,int n, FEMGrid grid) {
+    int ind;
+    for (int i = 0; i < 4; i++) {
+        ind=grid.arrE[n].nodes[i].returnId();
+        //cout<<ind<<"\t";
+        grid.PGlobal[ind]+=Plocal[i];
+    }
+    //cout<<endl;
+    return grid.PGlobal;
+}

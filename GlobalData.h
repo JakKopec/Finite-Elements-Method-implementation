@@ -23,6 +23,8 @@ public:
     double c;
     double t0; //temperatura poczatkowa w wezle
     double alfa;
+    double talfa;
+    double dt; //tau
     GlobalData();
 };
 class FEMGrid:public GlobalData
@@ -32,6 +34,7 @@ public:
     vector<Element> arrE;//nE
     vector<vector<double>> CGlobal;
     vector<vector<double>> HGlobal;
+    vector<double> PGlobal;
     FEMGrid();
 };
 

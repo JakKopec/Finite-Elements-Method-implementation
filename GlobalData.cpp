@@ -13,10 +13,10 @@
 #include "Functions.h"
 
 GlobalData::GlobalData() {
-    string data[10]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
+    string data[12]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
     fstream file;
     file.open("DATA.txt", std::ios_base::in | std::ios_base::out);
-    for (int a = 0; a < 10; a++) {
+    for (int a = 0; a < 12; a++) {
         getline(file, data[a]);
         //cout<<data[a]<<endl;
     }
@@ -24,8 +24,8 @@ GlobalData::GlobalData() {
     std::string::size_type sz;
     double temp = stod(data[0]);
     W = temp;
-    double temp2 = stod(data[1]);
-    H = temp2;
+    temp = stod(data[1]);
+    H = temp;
     nW = stoi(data[2]);
     nH = stoi(data[3]);
     heatConductionIndex = stoi(data[4]);
@@ -34,15 +34,18 @@ GlobalData::GlobalData() {
     nN = nH * nW;
     dw = W / (nW - 1);
     dh = H / (nH - 1);
-    double temp3 = stod(data[6]);
-    double temp4 = stod(data[7]);
-    double temp5 = stod(data[8]);
-    double temp6 = stod(data[9]);
-    ro = temp3;
-    c = temp4;
-    t0 = temp5;
-    alfa=temp6;
-
+    temp = stod(data[6]);
+    ro = temp;
+    temp = stod(data[7]);
+    c=temp;
+    temp = stod(data[8]);
+    t0=temp;
+    temp = stod(data[9]);
+    alfa=temp;
+    temp = stod(data[10]);
+    talfa=temp;
+    temp = stod(data[11]);
+    dt=temp;
 }
 
 FEMGrid::FEMGrid() {
@@ -67,6 +70,7 @@ FEMGrid::FEMGrid() {
         arrE.push_back(Element());
         arrN[a].id = a;
     }
+
     int dHtimes = 0;
     int dWtimes = 0;
     int c = 0;
@@ -113,6 +117,9 @@ FEMGrid::FEMGrid() {
 
     CGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));
     HGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));
+    for (int i = 0; i < this->nN; i++) {
+        PGlobal.push_back(0);
+    }
 }
 
 

@@ -1,7 +1,3 @@
-//
-// Created by Lasiuk on 04.12.2020.
-//
-
 #ifndef UNTITLED_ELEMENT_H
 #define UNTITLED_ELEMENT_H
 #include "Node.h"
@@ -28,6 +24,7 @@ public:
             {0, 0, 0, 0},
             {0, 0, 0, 0}
     };
+    vector<double> P;
     Element();
     Element(double x1, double x2, double x3, double x4, double y1, double y2, double y3, double y4);
     Element(Node a, Node b, Node c, Node d);

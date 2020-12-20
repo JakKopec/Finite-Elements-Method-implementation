@@ -18,9 +18,11 @@ struct LocalMatrixElem2{
             {0, 0, 0, 0},
             {0, 0, 0, 0},
             {0, 0, 0, 0}};
+    vector<double> P={0,0,0,0};
     LocalMatrixElem2(){};
 };
 vector<vector<double>> sumUpHglobal(vector<vector<double>> Hlocal,vector<vector<double>> HGlobal,int n,FEMGrid grid);//zalezne od siatki oraz typu elementu siatki!
+vector<double> sumUpPglobal(vector<double> Plocal,int n, FEMGrid grid);
 
 
 #endif //UNTITLED_FUNCTIONS_H
