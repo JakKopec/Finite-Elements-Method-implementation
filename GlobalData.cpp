@@ -1,51 +1,36 @@
-/*STRUKTURA PLIKU
-1- szerokosc
-2- wysokosc
-3- ilosc wezlow w poziomie
-4- ilosc wezlow w pionie
-5- wspolczynnik przewodzenia ciepla
-6- schemat calkowania
-7- ro
-8- C
-9- t0
-10- alfa*/
 #include "GlobalData.h"
 #include "Functions.h"
 
 GlobalData::GlobalData() {
-    string data[12]; //jesli zostana dodane nowe dane to bedzie trzeba zaktualizowac rozmiar
     fstream file;
     file.open("DATA.txt", std::ios_base::in | std::ios_base::out);
-    for (int a = 0; a < 12; a++) {
-        getline(file, data[a]);
-        //cout<<data[a]<<endl;
+    vector<double> data;
+    string stemp;
+    double dtemp;
+    while(!file.eof())
+    {
+        getline(file,stemp);
+        dtemp=stod(stemp);
+        data.push_back(dtemp);
     }
-    file.close();
-    std::string::size_type sz;
-    double temp = stod(data[0]);
-    W = temp;
-    temp = stod(data[1]);
-    H = temp;
-    nW = stoi(data[2]);
-    nH = stoi(data[3]);
-    heatConductionIndex = stoi(data[4]);
-    schema = stoi(data[5]);
+    W = data[0];
+    H = data[1];
+    nW = data[2];
+    nH = data[3];
+    heatConductionIndex = data[4];
+    schema = data[5];
     nE = (nH - 1) * (nW - 1);
     nN = nH * nW;
     dw = W / (nW - 1);
     dh = H / (nH - 1);
-    temp = stod(data[6]);
-    ro = temp;
-    temp = stod(data[7]);
-    c=temp;
-    temp = stod(data[8]);
-    t0=temp;
-    temp = stod(data[9]);
-    alfa=temp;
-    temp = stod(data[10]);
-    talfa=temp;
-    temp = stod(data[11]);
-    dt=temp;
+    denisity = data[6];
+    c = data[7];
+    specificHeat=data[7];
+    initialTemperature=data[8];
+    ambientTemperature=data[9];
+    alpha=data[10];
+    simulationTime=data[11];
+    simulationStepTime=data[12];
 }
 
 FEMGrid::FEMGrid() {
@@ -60,10 +45,14 @@ FEMGrid::FEMGrid() {
     cout << "\ndh:" << dh;
     cout << "\nWSP PRZEW CIEPLA:" << heatConductionIndex;
     cout << "\nSCHEMAT CALKOWANIA:" << schema << "-PUNKTOWY";
-    cout << "\nRO:" << ro;
+    cout << "\nGESTOSC:" << denisity;
     cout << "\nC:" << c;
-    cout << "\nT0:" << t0;
-    cout << "\nALFA:" << alfa << endl;
+    cout << "\nCIPELO WLASCIWE(?):" << specificHeat;
+    cout << "\nTEMPERTAURA POCZATKOWA:" << initialTemperature;
+    cout << "\nTEMPERATURA OTOCZENIA:" << ambientTemperature;
+    cout << "\nALFA:" << alpha;
+    cout << "\nCZAS SYMULACJI:" << simulationTime;
+    cout << "\nDLUGOSC KROKU SYMULACJI:" << simulationStepTime << endl;
     int index = 0;
     for (int a = 0; a < nN; a++) {
         arrN.push_back(Node(0, 0));
@@ -84,7 +73,7 @@ FEMGrid::FEMGrid() {
         dWtimes++;
     }
     for (int i = 0; i < nN; i++) {
-        arrN[i].t0 = this->t0;
+        arrN[i].t0 = this->initialTemperature;
         if (arrN[i].x == 0 || arrN[i].x == W || arrN[i].y == H || arrN[i].y == 0) {
             arrN[i].bc = true;
         }
@@ -108,7 +97,7 @@ FEMGrid::FEMGrid() {
     cout << endl;
 
     for (int i = 0; i < nN; i++) {
-        arrN[i].t0 = this->t0;
+        arrN[i].t0 = this->initialTemperature;
         if (arrN[i].x == 0 || arrN[i].x == W || arrN[i].y == H || arrN[i].y == 0) {
             arrN[i].bc = true;
         }

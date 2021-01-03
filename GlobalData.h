@@ -19,12 +19,14 @@ public:
     double dh; //H/nH-1
     int heatConductionIndex;//wsp przewodzenia ciepla
     int schema;//schemat calkowania
-    double ro;
+    double denisity;
     double c;
-    double t0; //temperatura poczatkowa w wezle
-    double alfa;
-    double talfa;
-    double dt; //tau
+    double specificHeat; //temperatura poczatkowa w wezle
+    double alpha;
+    double initialTemperature;
+    double ambientTemperature;
+    double simulationTime;
+    double simulationStepTime;
     GlobalData();
 };
 class FEMGrid:public GlobalData
