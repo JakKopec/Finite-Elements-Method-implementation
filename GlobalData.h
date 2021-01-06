@@ -37,6 +37,12 @@ public:
     vector<vector<double>> CGlobal;
     vector<vector<double>> HGlobal;
     vector<double> PGlobal;
+    vector<double> PFinal;
+    vector<vector<double>> CdT;
+    vector<double> CdTt0;
+    vector<vector<double>> HFinal;
+    vector<double> t0Vector;
+
     FEMGrid();
 };
 

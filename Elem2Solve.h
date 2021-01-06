@@ -1,5 +1,5 @@
-#ifndef UNTITLED_ELEMSOLVE_H
-#define UNTITLED_ELEMSOLVE_H
+#ifndef UNTITLED_ELEM2SOLVE_H
+#define UNTITLED_ELEM2SOLVE_H
 
 #include "Element.h"
 #include "GlobalData.h"
@@ -11,4 +11,4 @@ LocalMatrixElem2 elem3solve(Element b,FEMGrid grid);
 
 
 
-#endif //UNTITLED_ELEMSOLVE_H
+#endif //UNTITLED_ELEM2SOLVE_H

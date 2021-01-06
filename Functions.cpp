@@ -57,3 +57,13 @@ vector<double> sumUpPglobal(vector<double> Plocal,int n, FEMGrid grid) {
     //cout<<endl;
     return grid.PGlobal;
 }
+double shapeFun(double a,double b,double signa,double signb){
+    return 0.25*(1+signa*a)*(1+signb*b);
+}
+void displayVector(vector<double> arg){
+    cout.precision(5);
+    for(int a=0;a<arg.size();a++){
+        cout<<arg[a]<<"\t";
+    }
+    cout<<endl<<endl;
+}

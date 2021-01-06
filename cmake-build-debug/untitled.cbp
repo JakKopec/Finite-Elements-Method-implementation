@@ -80,10 +80,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp">
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Elem2Solve.cpp">
 			<Option target="untitled"/>
 		</Unit>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.h">
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h">
 			<Option target="untitled"/>
 		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Element.cpp">

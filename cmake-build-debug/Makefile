@@ -142,32 +142,32 @@ untitled/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/build
 .PHONY : untitled/fast
 
-ElemSolve.obj: ElemSolve.cpp.obj
+Elem2Solve.obj: Elem2Solve.cpp.obj
 
-.PHONY : ElemSolve.obj
+.PHONY : Elem2Solve.obj
 
 # target to build an object file
-ElemSolve.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/ElemSolve.cpp.obj
-.PHONY : ElemSolve.cpp.obj
+Elem2Solve.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Elem2Solve.cpp.obj
+.PHONY : Elem2Solve.cpp.obj
 
-ElemSolve.i: ElemSolve.cpp.i
+Elem2Solve.i: Elem2Solve.cpp.i
 
-.PHONY : ElemSolve.i
+.PHONY : Elem2Solve.i
 
 # target to preprocess a source file
-ElemSolve.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/ElemSolve.cpp.i
-.PHONY : ElemSolve.cpp.i
+Elem2Solve.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Elem2Solve.cpp.i
+.PHONY : Elem2Solve.cpp.i
 
-ElemSolve.s: ElemSolve.cpp.s
+Elem2Solve.s: Elem2Solve.cpp.s
 
-.PHONY : ElemSolve.s
+.PHONY : Elem2Solve.s
 
 # target to generate assembly for a file
-ElemSolve.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/ElemSolve.cpp.s
-.PHONY : ElemSolve.cpp.s
+Elem2Solve.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\untitled.dir\build.make CMakeFiles/untitled.dir/Elem2Solve.cpp.s
+.PHONY : Elem2Solve.cpp.s
 
 Element.obj: Element.cpp.obj
 
@@ -313,9 +313,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... untitled
-	@echo ... ElemSolve.obj
-	@echo ... ElemSolve.i
-	@echo ... ElemSolve.s
+	@echo ... Elem2Solve.obj
+	@echo ... Elem2Solve.i
+	@echo ... Elem2Solve.s
 	@echo ... Element.obj
 	@echo ... Element.i
 	@echo ... Element.s

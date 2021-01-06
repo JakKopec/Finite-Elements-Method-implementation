@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.cpp
 cmath
 -
-ElemSolve.h
-D:/Studia/Semestr5/Mes/untitled/ElemSolve.h
+Elem2Solve.h
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
 
-D:/Studia/Semestr5/Mes/untitled/ElemSolve.h
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
 Element.h
 D:/Studia/Semestr5/Mes/untitled/Element.h
 GlobalData.h

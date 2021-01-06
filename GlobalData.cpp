@@ -108,7 +108,13 @@ FEMGrid::FEMGrid() {
     HGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));
     for (int i = 0; i < this->nN; i++) {
         PGlobal.push_back(0);
+        PFinal.push_back(0);
+        t0Vector.push_back(this->arrN[i].t0);
+        CdTt0.push_back(0);
     }
+    CdT= vector<vector<double>>(nN, vector<double>(nN, 0));
+    HFinal= vector<vector<double>>(nN, vector<double>(nN, 0));
+
 }
 
 

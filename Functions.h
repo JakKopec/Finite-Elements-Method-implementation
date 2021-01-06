@@ -23,6 +23,7 @@ struct LocalMatrixElem2{
 };
 vector<vector<double>> sumUpHglobal(vector<vector<double>> Hlocal,vector<vector<double>> HGlobal,int n,FEMGrid grid);//zalezne od siatki oraz typu elementu siatki!
 vector<double> sumUpPglobal(vector<double> Plocal,int n, FEMGrid grid);
-
+void displayVector(vector<double> arg);
+double shapeFun(double a,double b,double signa,double signb);
 
 #endif //UNTITLED_FUNCTIONS_H

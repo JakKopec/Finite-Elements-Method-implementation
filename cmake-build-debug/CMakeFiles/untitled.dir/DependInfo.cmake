@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/ElemSolve.cpp.obj"
+  "D:/Studia/Semestr5/Mes/untitled/Elem2Solve.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Elem2Solve.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/Element.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Element.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/Functions.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Functions.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/GlobalData.cpp.obj"

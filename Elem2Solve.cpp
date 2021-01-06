@@ -1,5 +1,5 @@
 #include <cmath>
-#include "ElemSolve.h"
+#include "Elem2Solve.h"
 LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     cout.precision(3);
     double ksi[4] = {(-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3)), (-1 / sqrt(3))};
@@ -111,11 +111,11 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     reversedJacobian[1] = -jacobian[1] / det;
     reversedJacobian[2] = -jacobian[2] / det;
     reversedJacobian[3] = jacobian[0] / det;
-    cout << "Element " << b.elemID << " \nDet:" << det << "\tJakobian:\n";
+    /*cout << "Element " << b.elemID << " \nDet:" << det << "\tJakobian:\n";
     for (int j = 0; j < 4; j++) {
         cout << jacobian[j] << "\t";
     }
-    cout << endl;
+    cout << endl;*/
 
     for (int a = 0; a < 4; a++) {
         dNdX[0][a] = (dNdKsi[0][a] * reversedJacobian[0] + dNdEta[0][a] * reversedJacobian[1]);//git
@@ -136,7 +136,6 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
         }
     }
 
-
     for (int i = 0; i < 4; i++) {
         N[i][0] = (0.25 * (1 - ksi[i]) * (1 - eta[i]));
         N[i][1] = (0.25 * (1 + ksi[i]) * (1 - eta[i]));
@@ -149,7 +148,6 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
             NT[a][b] = N[b][a];
         }
     }
-
 
     for (int point = 1; point <= 4; point++) {
 
@@ -165,18 +163,6 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                         grid.heatConductionIndex * det * (multipliedX[i][j] + multipliedY[i][j]) * weight[point - 1];
             }
         }
-
-        /*vector<vector<double>> multipliedNNT = {
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {0, 0, 0, 0}
-        };
-        for (int i = 0; i < 4; ++i)
-            for (int j = 0; j < 4; ++j)
-                for (int k = 0; k < 4; ++k) {
-                    multipliedNNT[i][j] += N[i][k] * NT[k][j];
-                }*/
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -222,12 +208,24 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                 }
             }
         }
+        vector<double> vec;
+        vec.push_back(Nlocal[0][0]);
+        vec.push_back(Nlocal[0][1]);
+        vec.push_back(Nlocal[1][0]);
+        vec.push_back(Nlocal[1][1]);
+        tempP[0] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[0] + vec[1]);
+        tempP[1] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[2] + vec[3]);
+        vec.clear();
         Nlocal = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
                 {0, 0, 0, 0}
         };
+
+
     }
 
     if (b.nodes[1].bc == true && b.nodes[2].bc == true) {
@@ -242,6 +240,16 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                 }
             }
         }
+        vector<double> vec;
+        vec.push_back(Nlocal[1][1]);
+        vec.push_back(Nlocal[1][2]);
+        vec.push_back(Nlocal[2][1]);
+        vec.push_back(Nlocal[2][2]);
+        tempP[1] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[0] + vec[1]);
+        tempP[2] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[2] + vec[3]);
+        vec.clear();
         Nlocal = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
@@ -261,6 +269,16 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                 }
             }
         }
+        vector<double> vec;
+        vec.push_back(Nlocal[2][2]);
+        vec.push_back(Nlocal[2][3]);
+        vec.push_back(Nlocal[3][2]);
+        vec.push_back(Nlocal[3][3]);
+        tempP[2] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[0] + vec[1]);
+        tempP[3] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[2] + vec[3]);
+        vec.clear();
         Nlocal = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
@@ -280,6 +298,16 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                 }
             }
         }
+        vector<double> vec;
+        vec.push_back(Nlocal[0][0]);
+        vec.push_back(Nlocal[0][3]);
+        vec.push_back(Nlocal[3][0]);
+        vec.push_back(Nlocal[3][3]);
+        tempP[0] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[0] + vec[1]);
+        tempP[3] +=
+                 (0.5 * grid.H / (grid.nH - 1)) * grid.ambientTemperature * grid.alpha * (vec[2] + vec[3]);
+        vec.clear();
         Nlocal = {
                 {0, 0, 0, 0},
                 {0, 0, 0, 0},
@@ -287,19 +315,15 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
                 {0, 0, 0, 0}
         };
     }
-    //cout<<"alfa"<<grid.heatConductionIndex<<"\tL/2:"<< (0.5 * grid.H / (grid.nH - 1))<<endl;
-
     for (int i = 0; i < 4; i++) {
-        tempP[i] *= grid.H * 0.5 / (grid.nH - 1);
         for (int j = 0; j < 4; j++) {
-            HBc[i][j] *= (grid.heatConductionIndex * (0.5 * grid.H / (grid.nH - 1)));//det
+            HBc[i][j] *= (grid.alpha * (0.5 * grid.H / (grid.nH - 1)));
             b.H[i][j] += HBc[i][j];
         }
     }
 
-    //cout<<endl<<endl<<0.5 * grid.H / (grid.nH - 1)<<endl<<endl;
-    /*cout << endl;
-    cout << "Element " << b.elemID << endl;
+    /*cout << "Element " << b.elemID << endl;
+
     cout << "dNdKsi:\n";
     displayArray(dNdKsi, 4);
     cout << "dNdEta:\n";
@@ -315,26 +339,15 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     cout << "multipliedX:\n";
     displayArray(multipliedX,4);
     cout << "multipliedY:\n";
-    displayArray(multipliedY,4);*/
+    displayArray(multipliedY,4);
     cout << "Macierz H:\n";
     displayArray(b.H, 4);
     cout << "Macierz C:\n";
-    displayArray(b.C, 4);
+    displayArray(b.C, 4);*/
     cout << "HBC\n";
     displayArray(HBc);
-    /*
-    cout<<"N\n";
-    displayArray(N);
-    cout<<"NT\n";
-    displayArray(NT);
-    */
-
     cout << "P lokalne:\n";
-    for (int i = 0; i < tempP.size(); i++) {
-        cout << tempP[i] << "\t";
-    }
-    cout << endl << endl;
-
+    displayVector(tempP);
 
     LocalMatrixElem2 localMatrixElem2;
     for (int i = 0; i < 4; i++) {
@@ -342,7 +355,6 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
         for (int j = 0; j < 4; j++) {
             localMatrixElem2.H[i][j] = b.H[i][j];
             localMatrixElem2.C[i][j] = b.C[i][j];
-            //localMatrixElem2.H[i][j] += HBc[i][j];
         }
     }
 
