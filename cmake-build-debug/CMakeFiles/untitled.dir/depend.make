@@ -28,13 +28,11 @@ CMakeFiles/untitled.dir/GlobalData.cpp.obj: ../Node.h
 CMakeFiles/untitled.dir/Node.cpp.obj: ../Node.cpp
 CMakeFiles/untitled.dir/Node.cpp.obj: ../Node.h
 
-CMakeFiles/untitled.dir/main.cpp.obj: ../Elem2Solve.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../Element.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../Functions.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../GlobalData.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../Node.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../main.cpp
-CMakeFiles/untitled.dir/main.cpp.obj: ../matrix.h
 
 CMakeFiles/untitled.dir/matrix.cpp.obj: ../matrix.cpp
 CMakeFiles/untitled.dir/matrix.cpp.obj: ../matrix.h

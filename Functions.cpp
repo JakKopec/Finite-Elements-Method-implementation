@@ -159,7 +159,7 @@ void simulation(FEMGrid grid)
     vector<vector<double>> invertedH = vector<vector<double>>(16, vector<double>(16, 0));
     vector<double> tVector = vector<double>(grid.nN,0);
     for(int i=0;i<iter;i++) {
-        cout << "Iteracja nr " << i << ":\n";
+        cout << "______________________Iteracja nr " << i << "______________________\n";
         for (int a = 0; a < grid.nE; a++) {
             localMatrixElem2 = elem2solve(grid.arrE[a], grid);
             //localMatrixElem2=elem3solve(grid.arrE[a],grid);
@@ -168,12 +168,12 @@ void simulation(FEMGrid grid)
             grid.CGlobal = sumUpHglobal(localMatrixElem2.C, grid.CGlobal, a, grid);
             grid.PGlobal = sumUpPglobal(localMatrixElem2.P, a, grid);
         }
-        cout << "Macierz H+Hbc:\n";
+        /*cout << "Macierz H+Hbc:\n";
         displayArray(grid.HGlobal);
         cout << "Macierz C:\n";
         displayArray(grid.CGlobal);
         cout << "Wektor P:\n";
-        displayVector(grid.PGlobal);
+        displayVector(grid.PGlobal);*/
 
         for (int i = 0; i < grid.nN; i++) {
             for (int j = 0; j < grid.nN; j++) {
@@ -190,8 +190,9 @@ void simulation(FEMGrid grid)
         displayArray(grid.HFinal);
         cout << "Wektor P+C/dT*t0:\n";
         displayVector(grid.PFinal);
-        cout << endl;
         invertedH=gaussJordanEliminination(grid.HFinal);
+        //cout << "Odwrocone H\n";
+        //displayArray(invertedH);
         double temp=0;
         for(int a=0;a<grid.nN;a++){
             temp=0;
@@ -200,11 +201,10 @@ void simulation(FEMGrid grid)
             }
             tVector[a]=temp;
         }
+        cout << "Rozwiazanie ukladu rownan:\n";
         displayVector(tVector);
         temp=maxVal(tVector);
-        cout<<"Maksymalna temperatura w zbiorze rozwiazan: "<<temp<<endl;
-
-
+        cout<<"Maksymalna temperatura w zbiorze rozwiazan: "<<temp<<endl<<endl<<endl;
 
         invertedH.clear();
         tVector.clear();

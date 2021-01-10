@@ -6,12 +6,6 @@
 
 #IncludeRegexTransform: 
 
-D:/Studia/Semestr5/Mes/untitled/Elem2Solve.cpp
-cmath
--
-Elem2Solve.h
-D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
-
 D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
 Element.h
 D:/Studia/Semestr5/Mes/untitled/Element.h
@@ -44,14 +38,6 @@ iostream
 GlobalData.h
 D:/Studia/Semestr5/Mes/untitled/GlobalData.h
 
-D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp
-ctgmath
--
-GlobalData.h
-D:/Studia/Semestr5/Mes/untitled/GlobalData.h
-Functions.h
-D:/Studia/Semestr5/Mes/untitled/Functions.h
-
 D:/Studia/Semestr5/Mes/untitled/GlobalData.h
 Node.h
 D:/Studia/Semestr5/Mes/untitled/Node.h
@@ -63,28 +49,4 @@ vector
 D:/Studia/Semestr5/Mes/untitled/vector
 
 D:/Studia/Semestr5/Mes/untitled/Node.h
-
-D:/Studia/Semestr5/Mes/untitled/main.cpp
-Node.h
-D:/Studia/Semestr5/Mes/untitled/Node.h
-Element.h
-D:/Studia/Semestr5/Mes/untitled/Element.h
-GlobalData.h
-D:/Studia/Semestr5/Mes/untitled/GlobalData.h
-Functions.h
-D:/Studia/Semestr5/Mes/untitled/Functions.h
-Elem2Solve.h
-D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
-matrix.h
-D:/Studia/Semestr5/Mes/untitled/matrix.h
-
-D:/Studia/Semestr5/Mes/untitled/matrix.h
-iostream
--
-string
--
-sstream
--
-cmath
--
 
