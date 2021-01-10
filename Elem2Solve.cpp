@@ -340,14 +340,14 @@ LocalMatrixElem2 elem2solve(Element b,FEMGrid grid) {
     displayArray(multipliedX,4);
     cout << "multipliedY:\n";
     displayArray(multipliedY,4);
-    cout << "Macierz H:\n";
+    cout << "Macierz H+Hbc:\n";
     displayArray(b.H, 4);
     cout << "Macierz C:\n";
-    displayArray(b.C, 4);*/
+    displayArray(b.C, 4)
     cout << "HBC\n";
     displayArray(HBc);
     cout << "P lokalne:\n";
-    displayVector(tempP);
+    displayVector(tempP);*/
 
     LocalMatrixElem2 localMatrixElem2;
     for (int i = 0; i < 4; i++) {

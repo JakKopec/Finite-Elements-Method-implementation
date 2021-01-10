@@ -1,3 +1,4 @@
+#include <ctgmath>
 #include "GlobalData.h"
 #include "Functions.h"
 
@@ -117,4 +118,32 @@ FEMGrid::FEMGrid() {
 
 }
 
+bool FEMGrid::gauss(int n, vector<vector<double>> AB, vector<double> X)
+{
+    double m,s;
+    double eps = 1e-5;
+    // eliminacja wspólczynników
+    for(int i = 0; i < n - 1; i++)
+    {
+        for(int j = i + 1; j < n; j++)
+        {
+            if(fabs(AB[i][i]) < eps)
+                return false;
+            m = -AB[j][i] / AB[i][i];
+            for(int k = i + 1; k <= n; k++)
+                AB[j][k] += m * AB[i][k];
+        }
+    }
 
+    // wyliczanie niewiadomych
+    for(int i = n - 1; i >= 0; i--)
+    {
+        s = AB[i][n];
+        for(int j = n - 1; j >= i + 1; j--)
+            s -= AB[i][j] * X[j];
+        if(fabs(AB[i][i]) < eps)
+            return false;
+        X[i] = s / AB[i][i];
+    }
+    return true;
+}

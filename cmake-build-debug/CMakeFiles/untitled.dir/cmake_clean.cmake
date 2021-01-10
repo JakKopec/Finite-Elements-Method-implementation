@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/untitled.dir/GlobalData.cpp.obj"
   "CMakeFiles/untitled.dir/Node.cpp.obj"
   "CMakeFiles/untitled.dir/main.cpp.obj"
+  "CMakeFiles/untitled.dir/matrix.cpp.obj"
   "libuntitled.dll.a"
   "untitled.exe"
   "untitled.exe.manifest"

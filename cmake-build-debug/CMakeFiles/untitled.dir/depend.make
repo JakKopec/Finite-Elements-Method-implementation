@@ -33,4 +33,8 @@ CMakeFiles/untitled.dir/main.cpp.obj: ../Functions.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../GlobalData.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../Node.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../main.cpp
+CMakeFiles/untitled.dir/main.cpp.obj: ../matrix.h
+
+CMakeFiles/untitled.dir/matrix.cpp.obj: ../matrix.cpp
+CMakeFiles/untitled.dir/matrix.cpp.obj: ../matrix.h
 

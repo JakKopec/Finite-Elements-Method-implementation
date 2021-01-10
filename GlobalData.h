@@ -42,6 +42,7 @@ public:
     vector<double> CdTt0;
     vector<vector<double>> HFinal;
     vector<double> t0Vector;
+    bool gauss(int n, vector<vector<double>> AB, vector<double> X);
 
     FEMGrid();
 };
