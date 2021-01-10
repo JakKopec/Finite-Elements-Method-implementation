@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.cpp
+cmath
+-
+Elem2Solve.h
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
+
 D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
 Element.h
 D:/Studia/Semestr5/Mes/untitled/Element.h
@@ -22,6 +28,14 @@ vector
 iostream
 -
 
+D:/Studia/Semestr5/Mes/untitled/Functions.cpp
+cmath
+-
+Functions.h
+D:/Studia/Semestr5/Mes/untitled/Functions.h
+Elem2Solve.h
+D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h
+
 D:/Studia/Semestr5/Mes/untitled/Functions.h
 vector
 -
@@ -29,6 +43,14 @@ iostream
 -
 GlobalData.h
 D:/Studia/Semestr5/Mes/untitled/GlobalData.h
+
+D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp
+ctgmath
+-
+GlobalData.h
+D:/Studia/Semestr5/Mes/untitled/GlobalData.h
+Functions.h
+D:/Studia/Semestr5/Mes/untitled/Functions.h
 
 D:/Studia/Semestr5/Mes/untitled/GlobalData.h
 Node.h

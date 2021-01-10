@@ -12,6 +12,7 @@ CMakeFiles/untitled.dir/Element.cpp.obj: ../Element.cpp
 CMakeFiles/untitled.dir/Element.cpp.obj: ../Element.h
 CMakeFiles/untitled.dir/Element.cpp.obj: ../Node.h
 
+CMakeFiles/untitled.dir/Functions.cpp.obj: ../Elem2Solve.h
 CMakeFiles/untitled.dir/Functions.cpp.obj: ../Element.h
 CMakeFiles/untitled.dir/Functions.cpp.obj: ../Functions.cpp
 CMakeFiles/untitled.dir/Functions.cpp.obj: ../Functions.h

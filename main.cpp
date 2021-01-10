@@ -8,7 +8,8 @@
 using namespace std;
 int main() {
     FEMGrid grid;
-    LocalMatrixElem2 localMatrixElem2;
+    simulation(grid);
+    /*LocalMatrixElem2 localMatrixElem2;
     //Element test(0,4,4,0,0,0,6,6);
     //localMatrixElem2=elem2solve(test,grid);
     for (int a = 0; a < grid.nE; a++) {
@@ -41,72 +42,12 @@ int main() {
     cout << "Wektor P+C/dT*t0:\n";
     displayVector(grid.PFinal);
     cout << endl;
-    /*vector<vector<double>> huj = vector<vector<double>>(16, vector<double>(16, 0));
-    matrix h(16,16);
-    matrix res(16,16);
 
-    //grid.arrE[0].H=elem3solve(grid.arrE[0]);
-    //displayArray(grid.arrE[0].H,4);
-
-    //vector<vector<double>> h = vector<vector<double>>(16, vector<double>(16, 0));
-    //double h[16][16]={0};
-    for(int a=0;a<16;a++) {
-        for (int b = 0; b < 16; b++) {
-            h[a][b]=grid.HFinal[a][b];
-        }
-    }
-    //vector<vector<double>> hinv = vector<vector<double>>(16, vector<double>(16, 0));
-    //h=inv(h);
-    double hinv[16][16]={0};
-    if (INV(h, hinv)){
-        for(int a=0;a<16;a++) {
-            for (int b = 0; b < 16; b++) {
-                cout<<hinv[a][b]<<"\t";
-            }
-            cout<<endl;
-        }
-    }
-
-    for(int a=0;a<16;a++) {
-        for (int b = 0; b < 16; b++) {
-            h.M[a][b]=grid.HFinal[a][b];
-        }
-    }
-    res=inv(h);
-    for(int a=0;a<16;a++) {
-        for (int b = 0; b < 16; b++) {
-            cout<<res.M[a][b]<<"\t";
-        }
-        cout<<endl;
-    }
-    vector<vector<double>> Equations= vector<vector<double>>(grid.nN+1, vector<double>(grid.nN, 0));
-    vector<double> t1(grid.nN,0);
-    for(int i = 0; i < grid.PGlobal.size(); i++)
-    {
-        for(int j = 0; j < grid.PGlobal.size()+1; j++)
-        {
-            if(j == grid.PGlobal.size())
-                Equations[i][j] = grid.PFinal[i];
-            else
-                Equations[i][j] = grid.HFinal[i][j];
-        }
-    }
-    grid.gauss(grid.nN, Equations, t1);
-    displayVector(t1);
-    double max=maxVal(t1);
-    cout<<max<<endl;*/
     vector<vector<double>> inverted = vector<vector<double>>(16, vector<double>(16, 0));
     vector<double> tvector = vector<double>(grid.nN,0);
 
-    /*vector<vector<double>> aaa = {
-            {1,18,9,9,5,3},
-            {0,1,4,6,2,8},
-            {48,9,4,7,5,1},
-            {5,6,5,2,1,5},
-            {8,9,77,8,5,1},
-            {21,5,84,8,48,7}
-    };*/
-    inverted=gauss(grid.HFinal);
+
+    inverted=gaussJordanEliminination(grid.HFinal);
     double temp=0;
     for(int a=0;a<grid.nN;a++){
         temp=0;
@@ -117,4 +58,14 @@ int main() {
     }
     displayVector(tvector);
     temp=maxVal(tvector);
+    cout<<"Maksymalna temperatura w zbiorze rozwiazan: "<<temp<<endl;*/
 }
+
+         /*vector<vector<double>> aaa = {
+            {1,18,9,9,5,3},
+            {0,1,4,6,2,8},
+            {48,9,4,7,5,1},
+            {5,6,5,2,1,5},
+            {8,9,77,8,5,1},
+            {21,5,84,8,48,7}
+    };*/

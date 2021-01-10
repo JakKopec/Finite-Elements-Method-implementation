@@ -1,5 +1,7 @@
 #include <cmath>
 #include"Functions.h"
+#include "Elem2Solve.h"
+
 void displayArray(vector<vector<double>> c,int size) {
     cout.precision(3);
     for (int a = 0; a < size; a++) {
@@ -68,68 +70,6 @@ void displayVector(vector<double> arg){
     }
     cout<<endl<<endl;
 }
-void simulation(FEMGrid femGrid,int iteration)
-{
-    cout<<"Iteracja nr "<<iteration<<":\n";
-}
-
-#define SIZE 16
-void getCfactor(double M[SIZE][SIZE], double t[SIZE][SIZE], int p, int q, int n) {
-    int i = 0, j = 0;
-    for (int r = 0; r < n; r++) {
-        for (int c = 0; c < n; c++) //Copy only those elements which are not in given row r and column c: {
-            if (r != p && c != q) {
-                t[i][j++] = M[r][c]; //If row is filled increase r index and reset c index
-                if (j == n - 1) {
-                    j = 0;
-                    i++;
-                }
-            }
-    }
-}
-double DET(double M[SIZE][SIZE], int n) {
-    double D = 0;
-    if (n == 1)
-        return M[0][0];
-    double t[SIZE][SIZE]; //store cofactors
-    int s = 1;
-    for (int f = 0; f < n; f++) {
-//For Getting Cofactor of M[0][f] do getCfactor(M, t, 0, f, n); D += s * M[0][f] * DET(t, n - 1);
-        s = -s;
-    }
-    return D;
-}
-void ADJ(double M[SIZE][SIZE],double adj[SIZE][SIZE]) {
-    if (SIZE == 1) {
-        adj[0][0] = 1;
-        return;
-    }
-    int s = 1;
-    double t[SIZE][SIZE];
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-//To get cofactor of M[i][j]
-            getCfactor(M, t, i, j, SIZE);
-            s = ((i + j) % 2 == 0) ? 1 : -1; //sign of adj[j][i] positive if sum of row and column indexes is even.
-            adj[j][i] =
-                    (s) * (DET(t, SIZE - 1)); //Interchange rows and columns to get the transpose of the cofactor matrix
-        }
-    }
-}
-bool INV(double M[SIZE][SIZE], double inv[SIZE][SIZE]) {
-    int det = DET(M, SIZE);
-    if (det == 0) {
-        cout << "can't find its inverse";
-        return false;
-    }
-    double adj[SIZE][SIZE];
-    ADJ(M, adj);
-    for (int i = 0; i < SIZE; i++) for (int j = 0; j < SIZE; j++) inv[i][j] = adj[i][j] / double(det);
-    return true;
-}
-template<class T> void print(T A[SIZE][SIZE]) {
-for (int i=0; i<SIZE; i++) { for (int j=0; j<SIZE; j++) cout << A[i][j] << " "; cout << endl; }
-}
 double maxVal(vector<double> arg)
 {
     double temp=arg[0];
@@ -140,7 +80,7 @@ double maxVal(vector<double> arg)
     }
     return temp;
 }
-vector<vector<double>> gauss(vector<vector<double>> a) {
+vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a) {
     cout.precision(3);
     vector<vector<double>> result= vector<vector<double>>(16, vector<double>(16, 0));
     int i = 0, j = 0, k = 0, n = 0;
@@ -156,14 +96,14 @@ vector<vector<double>> gauss(vector<vector<double>> a) {
             mat[i][j]=a[i][j];
         }
     }
-    cout << endl << "Input matrix:" << endl;
+    /*cout << endl << "Input matrix:" << endl;
     for (i = 0; i < n; ++i) {
         for (j = 0; j < n; ++j) {
             cout << mat[i][j] << "\t";
         }
         cout << endl;
     }
-    cout << endl;
+    cout << endl;*/
     for (i = 0; i < n; ++i) {
         for (j = 0; j < 2 * n; ++j) {
             if (j == (i + n)) {
@@ -201,14 +141,84 @@ vector<vector<double>> gauss(vector<vector<double>> a) {
     for (i = 0; i < n; ++i) {
         for (j = n; j < 2 * n; ++j) {
             //cout << mat[i][j] << "\t";
-            result[i][j-16]=mat[i][j];
+            result[i][j-result.size()]=mat[i][j];
         }
         //cout << endl;
     }
-    displayArray(result);
+    //displayArray(result);
     for (i = 0; i < n; ++i) {
         delete[] mat[i];
     }
     delete[] mat;
     return result;
+}
+void simulation(FEMGrid grid)
+{
+    int iter=grid.simulationTime/grid.simulationStepTime;
+    LocalMatrixElem2 localMatrixElem2;
+    vector<vector<double>> invertedH = vector<vector<double>>(16, vector<double>(16, 0));
+    vector<double> tVector = vector<double>(grid.nN,0);
+    for(int i=0;i<iter;i++) {
+        cout << "Iteracja nr " << i << ":\n";
+        for (int a = 0; a < grid.nE; a++) {
+            localMatrixElem2 = elem2solve(grid.arrE[a], grid);
+            //localMatrixElem2=elem3solve(grid.arrE[a],grid);
+            //localMatrixElem2=elem4solve(grid.arrE[a],grid);
+            grid.HGlobal = sumUpHglobal(localMatrixElem2.H, grid.HGlobal, a, grid);
+            grid.CGlobal = sumUpHglobal(localMatrixElem2.C, grid.CGlobal, a, grid);
+            grid.PGlobal = sumUpPglobal(localMatrixElem2.P, a, grid);
+        }
+        cout << "Macierz H+Hbc:\n";
+        displayArray(grid.HGlobal);
+        cout << "Macierz C:\n";
+        displayArray(grid.CGlobal);
+        cout << "Wektor P:\n";
+        displayVector(grid.PGlobal);
+
+        for (int i = 0; i < grid.nN; i++) {
+            for (int j = 0; j < grid.nN; j++) {
+                grid.HFinal[i][j] = grid.HGlobal[i][j] + grid.CGlobal[i][j] / grid.simulationStepTime;
+            }
+        }
+        for (int i = 0; i < grid.nN; i++) {
+            for (int j = 0; j < grid.nN; j++) {
+                grid.CdTt0[i] += (grid.t0Vector[j] * grid.CGlobal[i][j] / grid.simulationStepTime);
+            }
+            grid.PFinal[i] = grid.PGlobal[i] + grid.CdTt0[i];
+        }
+        cout << "Macierz H+C/dT:\n";
+        displayArray(grid.HFinal);
+        cout << "Wektor P+C/dT*t0:\n";
+        displayVector(grid.PFinal);
+        cout << endl;
+        invertedH=gaussJordanEliminination(grid.HFinal);
+        double temp=0;
+        for(int a=0;a<grid.nN;a++){
+            temp=0;
+            for(int b=0;b<grid.nN;b++){
+                temp+=invertedH[a][b]*grid.PFinal[b];
+            }
+            tVector[a]=temp;
+        }
+        displayVector(tVector);
+        temp=maxVal(tVector);
+        cout<<"Maksymalna temperatura w zbiorze rozwiazan: "<<temp<<endl;
+
+
+
+        invertedH.clear();
+        tVector.clear();
+        grid.HGlobal=vector<vector<double>>(16, vector<double>(16, 0));
+        grid.CGlobal=vector<vector<double>>(16, vector<double>(16, 0));
+        grid.PGlobal=vector<double>(grid.nN,0);
+        grid.HFinal=vector<vector<double>>(16, vector<double>(16, 0));
+        grid.PFinal=vector<double>(grid.nN,0);
+        grid.CdTt0=vector<double>(grid.nN,0);
+        for(int b=0;b<grid.nN;b++)
+        {
+            grid.t0Vector[b]=tVector[b];
+        }
+        invertedH = vector<vector<double>>(16, vector<double>(16, 0));
+        tVector = vector<double>(grid.nN,0);
+    }
 }

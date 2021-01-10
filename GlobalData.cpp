@@ -113,7 +113,6 @@ FEMGrid::FEMGrid() {
         t0Vector.push_back(this->arrN[i].t0);
         CdTt0.push_back(0);
     }
-    CdT= vector<vector<double>>(nN, vector<double>(nN, 0));
     HFinal= vector<vector<double>>(nN, vector<double>(nN, 0));
 
 }
