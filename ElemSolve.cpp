@@ -9,7 +9,7 @@ LocalMatrixElemData elemSolve(Element b, FEMGrid grid) {
     vector<vector<double>> dNdEta(schema2, vector<double>(4, 0));
 
     double sq,sq1,sq2,w1,w2;
-    if(schema2==4) {
+    if(grid.schema==2) {
         /*ksi = {(-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3)), (-1 / sqrt(3))};
         eta = {(-1 / sqrt(3)), (-1 / sqrt(3)), (1 / sqrt(3)), (1 / sqrt(3))};
         for(int i=0;i<schema2;i++){
@@ -17,7 +17,7 @@ LocalMatrixElemData elemSolve(Element b, FEMGrid grid) {
         }*/
         return elem2solve(b, grid);
     }
-    else if (schema2 == 9) {
+    else if (grid.schema==3) {
         sq = 0.2 * sqrt(15);
         w1 = 5.0 / 9;
         w2 = 8.0 / 9;
@@ -25,7 +25,7 @@ LocalMatrixElemData elemSolve(Element b, FEMGrid grid) {
         ksi = {-sq, 0, sq, -sq, 0, sq, -sq, 0, sq};
         eta = {-sq, -sq, -sq, 0, 0, 0, sq, sq, sq};
     }
-    else if (schema2 == 16) {
+    else if (grid.schema==4) {
         w1 = 1.0 / 36 * (18 - sqrt(30));
         w2 = 1.0 / 36 * (18 + sqrt(30));
         weights = {w1 * w1, w1 * w2, w1 * w2, w1 * w1,

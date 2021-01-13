@@ -114,7 +114,6 @@ FEMGrid::FEMGrid() {
         CdTt0.push_back(0);
     }
     HFinal= vector<vector<double>>(nN, vector<double>(nN, 0));
-
 }
 
 bool FEMGrid::gauss(int n, vector<vector<double>> AB, vector<double> X)

@@ -135,7 +135,6 @@ LocalMatrixElemData elem2solve(Element b,FEMGrid grid) {
             dNdYT[a][b] = dNdY[b][a];
         }
     }
-
     for (int i = 0; i < 4; i++) {
         N[i][0] = (0.25 * (1 - ksi[i]) * (1 - eta[i]));
         N[i][1] = (0.25 * (1 + ksi[i]) * (1 - eta[i]));
@@ -357,6 +356,5 @@ LocalMatrixElemData elem2solve(Element b,FEMGrid grid) {
             localMatrixElemData.C[i][j] = b.C[i][j];
         }
     }
-    cout<<"Guci\n";
     return localMatrixElemData;
 }

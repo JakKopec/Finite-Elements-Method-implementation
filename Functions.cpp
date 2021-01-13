@@ -102,9 +102,9 @@ double minVal(vector<double> arg)
     }
     return temp;
 }
-vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a) {
+vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a,FEMGrid femGrid) {
     cout.precision(3);
-    vector<vector<double>> result= vector<vector<double>>(16, vector<double>(16, 0));
+    vector<vector<double>> result= vector<vector<double>>(femGrid.nN, vector<double>(femGrid.nN, 0));
     int i = 0, j = 0, k = 0, n = 0;
     float **mat = NULL;
     float d = 0.0;
@@ -118,14 +118,6 @@ vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a) {
             mat[i][j]=a[i][j];
         }
     }
-    /*cout << endl << "Input matrix:" << endl;
-    for (i = 0; i < n; ++i) {
-        for (j = 0; j < n; ++j) {
-            cout << mat[i][j] << "\t";
-        }
-        cout << endl;
-    }
-    cout << endl;*/
     for (i = 0; i < n; ++i) {
         for (j = 0; j < 2 * n; ++j) {
             if (j == (i + n)) {
@@ -142,7 +134,6 @@ vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a) {
             }
         }
     }
-    //cout << endl;
     for (i = 0; i < n; ++i) {
         for (j = 0; j < 2 * n; ++j) {
             if (j != i) {
@@ -153,7 +144,6 @@ vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a) {
             }
         }
     }
-    //cout << endl;
     for (i = 0; i < n; ++i) {
         d = mat[i][i];
         for (j = 0; j < 2 * n; ++j) {
@@ -178,7 +168,7 @@ void simulation(FEMGrid grid)
 {
     int iter=grid.simulationTime/grid.simulationStepTime;
     LocalMatrixElemData localMatrixElemData;
-    vector<vector<double>> invertedH = vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
+    vector<vector<double>> invertedH;
     vector<double> tVector = vector<double>(grid.nN,0);
     for(int i=0;i<iter;i++) {
         cout << "______________________Iteracja nr " << i << "______________________\n";
@@ -188,6 +178,7 @@ void simulation(FEMGrid grid)
             grid.CGlobal = sumUpHglobal(localMatrixElemData.C, grid.CGlobal, a, grid);
             grid.PGlobal = sumUpPglobal(localMatrixElemData.P, a, grid);
         }
+
         /*cout << "Macierz H+Hbc:\n";
         displayArray(grid.HGlobal);
         cout << "Macierz C:\n";
@@ -206,13 +197,13 @@ void simulation(FEMGrid grid)
             }
             grid.PFinal[i] = grid.PGlobal[i] + grid.CdTt0[i];
         }
-
         //cout<<grid.PFinal[0]<<endl;
         /*cout << "Macierz H+C/dT:\n";
         displayArray(grid.HFinal);
         cout << "Wektor P+C/dT*t0:\n";
         displayVector(grid.PFinal);*/
-        invertedH=gaussJordanEliminination(grid.HFinal);
+        invertedH=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
+        invertedH=gaussJordanEliminination(grid.HFinal,grid);
         //cout << "Odwrocone H\n";
         //displayArray(invertedH);
         double temp=0;
@@ -224,12 +215,18 @@ void simulation(FEMGrid grid)
             tVector[a]=temp;
         }
         cout << "Rozwiazanie ukladu rownan:\n";
-        displayVector(tVector);
+        //displayVector(tVector);
         cout<<"Minimalna temperatura w zbiorze rozwiazan: ";cout.precision(6);cout.flush();cout<<minVal(tVector)<<endl;
         cout<<"Maksymalna temperatura w zbiorze rozwiazan: ";cout.precision(6);cout.flush();cout<<maxVal(tVector)<<endl;
 
         invertedH.clear();
         tVector.clear();
+        grid.HGlobal.clear();
+        grid.CGlobal.clear();
+        grid.PGlobal.clear();
+        grid.HFinal.clear();
+        grid.PFinal.clear();
+        grid.CdTt0.clear();
         grid.HGlobal=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
         grid.CGlobal=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
         grid.PGlobal=vector<double>(grid.nN,0);
@@ -240,7 +237,7 @@ void simulation(FEMGrid grid)
         {
             grid.t0Vector[b]=tVector[b];
         }
-        invertedH = vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
+        //invertedH = vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
         tVector = vector<double>(grid.nN,0);
     }
 }
