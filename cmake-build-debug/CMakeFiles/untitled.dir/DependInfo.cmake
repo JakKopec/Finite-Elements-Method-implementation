@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "D:/Studia/Semestr5/Mes/untitled/Functions.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Functions.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/GlobalData.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/GlobalData.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/Node.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Node.cpp.obj"
+  "D:/Studia/Semestr5/Mes/untitled/Simulation.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/Simulation.cpp.obj"
   "D:/Studia/Semestr5/Mes/untitled/main.cpp" "D:/Studia/Semestr5/Mes/untitled/cmake-build-debug/CMakeFiles/untitled.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

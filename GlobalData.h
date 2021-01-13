@@ -21,7 +21,6 @@ public:
     int schema;//schemat calkowania
     double denisity;
     double c;
-    double specificHeat; //temperatura poczatkowa w wezle
     double alpha;
     double initialTemperature;
     double ambientTemperature;

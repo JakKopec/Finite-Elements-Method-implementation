@@ -35,6 +35,13 @@ CMakeFiles/untitled.dir/GlobalData.cpp.obj: ../Node.h
 CMakeFiles/untitled.dir/Node.cpp.obj: ../Node.cpp
 CMakeFiles/untitled.dir/Node.cpp.obj: ../Node.h
 
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../ElemSolve.h
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../Element.h
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../Functions.h
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../GlobalData.h
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../Node.h
+CMakeFiles/untitled.dir/Simulation.cpp.obj: ../Simulation.cpp
+
 CMakeFiles/untitled.dir/main.cpp.obj: ../Element.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../Functions.h
 CMakeFiles/untitled.dir/main.cpp.obj: ../GlobalData.h

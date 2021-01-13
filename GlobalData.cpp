@@ -26,7 +26,6 @@ GlobalData::GlobalData() {
     dh = H / (nH - 1);
     denisity = data[6];
     c = data[7];
-    specificHeat=data[7];
     initialTemperature=data[8];
     ambientTemperature=data[9];
     alpha=data[10];
@@ -47,8 +46,7 @@ FEMGrid::FEMGrid() {
     cout << "\nWSP PRZEW CIEPLA:" << heatConductionIndex;
     cout << "\nSCHEMAT CALKOWANIA:" << schema << "-PUNKTOWY";
     cout << "\nGESTOSC:" << denisity;
-    cout << "\nC:" << c;
-    cout << "\nCIPELO WLASCIWE(?):" << specificHeat;
+    cout << "\nCIEPLO WLASCIWE:" << c;
     cout << "\nTEMPERTAURA POCZATKOWA:" << initialTemperature;
     cout << "\nTEMPERATURA OTOCZENIA:" << ambientTemperature;
     cout << "\nALFA:" << alpha;
@@ -57,8 +55,10 @@ FEMGrid::FEMGrid() {
     int index = 0;
     for (int a = 0; a < nN; a++) {
         arrN.push_back(Node(0, 0));
-        arrE.push_back(Element());
         arrN[a].id = a;
+    }
+    for(int a=0;a<nE;a++){
+        arrE.push_back(Element());
     }
 
     int dHtimes = 0;
@@ -114,34 +114,4 @@ FEMGrid::FEMGrid() {
         CdTt0.push_back(0);
     }
     HFinal= vector<vector<double>>(nN, vector<double>(nN, 0));
-}
-
-bool FEMGrid::gauss(int n, vector<vector<double>> AB, vector<double> X)
-{
-    double m,s;
-    double eps = 1e-5;
-    // eliminacja wspólczynników
-    for(int i = 0; i < n - 1; i++)
-    {
-        for(int j = i + 1; j < n; j++)
-        {
-            if(fabs(AB[i][i]) < eps)
-                return false;
-            m = -AB[j][i] / AB[i][i];
-            for(int k = i + 1; k <= n; k++)
-                AB[j][k] += m * AB[i][k];
-        }
-    }
-
-    // wyliczanie niewiadomych
-    for(int i = n - 1; i >= 0; i--)
-    {
-        s = AB[i][n];
-        for(int j = n - 1; j >= i + 1; j--)
-            s -= AB[i][j] * X[j];
-        if(fabs(AB[i][i]) < eps)
-            return false;
-        X[i] = s / AB[i][i];
-    }
-    return true;
 }

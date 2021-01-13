@@ -29,6 +29,6 @@ void displayVector(vector<double> arg);
 double shapeFun(double a,double b,double signa,double signb);
 double minVal(vector<double> arg);
 double maxVal(vector<double> arg);
-vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a);
+vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a,FEMGrid femGrid);
 void simulation(FEMGrid femGrid);
 #endif //UNTITLED_FUNCTIONS_H

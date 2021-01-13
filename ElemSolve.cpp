@@ -293,6 +293,8 @@ LocalMatrixElemData elemSolve(Element b, FEMGrid grid) {
             localMatrixElemData.C[i][j] = b.C[i][j];
         }
     }
+    tempP={0,0,0,0};
+    HBc={{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}};
     return localMatrixElemData;
 }
 

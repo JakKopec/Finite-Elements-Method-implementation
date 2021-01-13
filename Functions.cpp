@@ -85,9 +85,9 @@ void displayVector(vector<double> arg){
 double maxVal(vector<double> arg)
 {
     double temp=arg[0];
-    for(int a=1;a<arg.size();a++){
-        if(arg[a]>temp){
-            temp=arg[a];
+    for(int a=0;a<arg.size()-1;a++){
+        if(arg[a+1]>temp){
+            temp=arg[a+1];
         }
     }
     return temp;
@@ -95,9 +95,9 @@ double maxVal(vector<double> arg)
 double minVal(vector<double> arg)
 {
     double temp=arg[0];
-    for(int a=1;a<arg.size();a++){
-        if(arg[a]<temp){
-            temp=arg[a];
+    for(int a=0;a<arg.size()-1;a++){
+        if(arg[a+1]<temp){
+            temp=arg[a+1];
         }
     }
     return temp;
@@ -163,81 +163,4 @@ vector<vector<double>> gaussJordanEliminination(vector<vector<double>> a,FEMGrid
     }
     delete[] mat;
     return result;
-}
-void simulation(FEMGrid grid)
-{
-    int iter=grid.simulationTime/grid.simulationStepTime;
-    LocalMatrixElemData localMatrixElemData;
-    vector<vector<double>> invertedH;
-    vector<double> tVector = vector<double>(grid.nN,0);
-    for(int i=0;i<iter;i++) {
-        cout << "______________________Iteracja nr " << i << "______________________\n";
-        for (int a = 0; a < grid.nE; a++) {
-            localMatrixElemData = elemSolve(grid.arrE[a], grid);
-            grid.HGlobal = sumUpHglobal(localMatrixElemData.H, grid.HGlobal, a, grid);
-            grid.CGlobal = sumUpHglobal(localMatrixElemData.C, grid.CGlobal, a, grid);
-            grid.PGlobal = sumUpPglobal(localMatrixElemData.P, a, grid);
-        }
-
-        /*cout << "Macierz H+Hbc:\n";
-        displayArray(grid.HGlobal);
-        cout << "Macierz C:\n";
-        displayArray(grid.CGlobal);
-        cout << "Wektor P:\n";
-        displayVector(grid.PGlobal);*/
-
-        for (int i = 0; i < grid.nN; i++) {
-            for (int j = 0; j < grid.nN; j++) {
-                grid.HFinal[i][j] = grid.HGlobal[i][j] + grid.CGlobal[i][j] / grid.simulationStepTime;
-            }
-        }
-        for (int i = 0; i < grid.nN; i++) {
-            for (int j = 0; j < grid.nN; j++) {
-                grid.CdTt0[i] += (grid.t0Vector[j] * grid.CGlobal[i][j] / grid.simulationStepTime);
-            }
-            grid.PFinal[i] = grid.PGlobal[i] + grid.CdTt0[i];
-        }
-        //cout<<grid.PFinal[0]<<endl;
-        /*cout << "Macierz H+C/dT:\n";
-        displayArray(grid.HFinal);
-        cout << "Wektor P+C/dT*t0:\n";
-        displayVector(grid.PFinal);*/
-        invertedH=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
-        invertedH=gaussJordanEliminination(grid.HFinal,grid);
-        //cout << "Odwrocone H\n";
-        //displayArray(invertedH);
-        double temp=0;
-        for(int a=0;a<grid.nN;a++){
-            temp=0;
-            for(int b=0;b<grid.nN;b++){
-                temp+=invertedH[a][b]*grid.PFinal[b];
-            }
-            tVector[a]=temp;
-        }
-        cout << "Rozwiazanie ukladu rownan:\n";
-        //displayVector(tVector);
-        cout<<"Minimalna temperatura w zbiorze rozwiazan: ";cout.precision(6);cout.flush();cout<<minVal(tVector)<<endl;
-        cout<<"Maksymalna temperatura w zbiorze rozwiazan: ";cout.precision(6);cout.flush();cout<<maxVal(tVector)<<endl;
-
-        invertedH.clear();
-        tVector.clear();
-        grid.HGlobal.clear();
-        grid.CGlobal.clear();
-        grid.PGlobal.clear();
-        grid.HFinal.clear();
-        grid.PFinal.clear();
-        grid.CdTt0.clear();
-        grid.HGlobal=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
-        grid.CGlobal=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
-        grid.PGlobal=vector<double>(grid.nN,0);
-        grid.HFinal=vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
-        grid.PFinal=vector<double>(grid.nN,0);
-        grid.CdTt0=vector<double>(grid.nN,0);
-        for(int b=0;b<grid.nN;b++)
-        {
-            grid.t0Vector[b]=tVector[b];
-        }
-        //invertedH = vector<vector<double>>(grid.nN, vector<double>(grid.nN, 0));
-        tVector = vector<double>(grid.nN,0);
-    }
 }

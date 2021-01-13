@@ -26,16 +26,6 @@ vector
 iostream
 -
 
-D:/Studia/Semestr5/Mes/untitled/Functions.cpp
-cmath
--
-iomanip
--
-Functions.h
-D:/Studia/Semestr5/Mes/untitled/Functions.h
-ElemSolve.h
-D:/Studia/Semestr5/Mes/untitled/ElemSolve.h
-
 D:/Studia/Semestr5/Mes/untitled/Functions.h
 vector
 -
@@ -55,4 +45,10 @@ vector
 D:/Studia/Semestr5/Mes/untitled/vector
 
 D:/Studia/Semestr5/Mes/untitled/Node.h
+
+D:/Studia/Semestr5/Mes/untitled/Simulation.cpp
+Functions.h
+D:/Studia/Semestr5/Mes/untitled/Functions.h
+ElemSolve.h
+D:/Studia/Semestr5/Mes/untitled/ElemSolve.h
 
