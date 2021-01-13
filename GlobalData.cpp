@@ -78,7 +78,7 @@ FEMGrid::FEMGrid() {
         if (arrN[i].x == 0 || arrN[i].x == W || arrN[i].y == H || arrN[i].y == 0) {
             arrN[i].bc = true;
         }
-        arrN[i].displayNode();
+        //arrN[i].displayNode();
     }
 
     int temp = 0;
@@ -88,7 +88,7 @@ FEMGrid::FEMGrid() {
         arrE[i].nodes[1].operator=(arrN[i + nH + temp]);
         arrE[i].nodes[2].operator=(arrN[i + 1 + nH + temp]);
         arrE[i].nodes[3].operator=(arrN[i + 1 + temp]);
-        arrE[i].displayElement();
+        //arrE[i].displayElement();
         temp2++;
         if (temp2 % nH == 0) {
             temp++;
@@ -102,7 +102,7 @@ FEMGrid::FEMGrid() {
         if (arrN[i].x == 0 || arrN[i].x == W || arrN[i].y == H || arrN[i].y == 0) {
             arrN[i].bc = true;
         }
-        arrN[i].displayNode();
+        //arrN[i].displayNode();
     }
 
     CGlobal = vector<vector<double>>(nN, vector<double>(nN, 0));

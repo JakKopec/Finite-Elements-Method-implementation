@@ -86,6 +86,12 @@
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Elem2Solve.h">
 			<Option target="untitled"/>
 		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.cpp">
+			<Option target="untitled"/>
+		</Unit>
+		<Unit filename="D:/Studia/Semestr5/Mes/untitled/ElemSolve.h">
+			<Option target="untitled"/>
+		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/Element.cpp">
 			<Option target="untitled"/>
 		</Unit>
@@ -111,12 +117,6 @@
 			<Option target="untitled"/>
 		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/main.cpp">
-			<Option target="untitled"/>
-		</Unit>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/matrix.cpp">
-			<Option target="untitled"/>
-		</Unit>
-		<Unit filename="D:/Studia/Semestr5/Mes/untitled/matrix.h">
 			<Option target="untitled"/>
 		</Unit>
 		<Unit filename="D:/Studia/Semestr5/Mes/untitled/CMakeLists.txt">

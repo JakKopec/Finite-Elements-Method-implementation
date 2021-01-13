@@ -141,9 +141,22 @@ CMakeFiles/untitled.dir/Functions.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Functions.cpp.s"
 	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\Functions.cpp -o CMakeFiles\untitled.dir\Functions.cpp.s
 
+CMakeFiles/untitled.dir/ElemSolve.cpp.obj: CMakeFiles/untitled.dir/flags.make
+CMakeFiles/untitled.dir/ElemSolve.cpp.obj: ../ElemSolve.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/untitled.dir/ElemSolve.cpp.obj"
+	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\ElemSolve.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp
+
+CMakeFiles/untitled.dir/ElemSolve.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/ElemSolve.cpp.i"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp > CMakeFiles\untitled.dir\ElemSolve.cpp.i
+
+CMakeFiles/untitled.dir/ElemSolve.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/ElemSolve.cpp.s"
+	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\ElemSolve.cpp -o CMakeFiles\untitled.dir\ElemSolve.cpp.s
+
 CMakeFiles/untitled.dir/Elem2Solve.cpp.obj: CMakeFiles/untitled.dir/flags.make
 CMakeFiles/untitled.dir/Elem2Solve.cpp.obj: ../Elem2Solve.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/untitled.dir/Elem2Solve.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/untitled.dir/Elem2Solve.cpp.obj"
 	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\Elem2Solve.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\Elem2Solve.cpp
 
 CMakeFiles/untitled.dir/Elem2Solve.cpp.i: cmake_force
@@ -154,19 +167,6 @@ CMakeFiles/untitled.dir/Elem2Solve.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/Elem2Solve.cpp.s"
 	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\Elem2Solve.cpp -o CMakeFiles\untitled.dir\Elem2Solve.cpp.s
 
-CMakeFiles/untitled.dir/matrix.cpp.obj: CMakeFiles/untitled.dir/flags.make
-CMakeFiles/untitled.dir/matrix.cpp.obj: ../matrix.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Studia\Semestr5\Mes\untitled\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/untitled.dir/matrix.cpp.obj"
-	D:\Programy\MinGW\mingw32\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\untitled.dir\matrix.cpp.obj -c D:\Studia\Semestr5\Mes\untitled\matrix.cpp
-
-CMakeFiles/untitled.dir/matrix.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/untitled.dir/matrix.cpp.i"
-	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Studia\Semestr5\Mes\untitled\matrix.cpp > CMakeFiles\untitled.dir\matrix.cpp.i
-
-CMakeFiles/untitled.dir/matrix.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/untitled.dir/matrix.cpp.s"
-	D:\Programy\MinGW\mingw32\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Studia\Semestr5\Mes\untitled\matrix.cpp -o CMakeFiles\untitled.dir\matrix.cpp.s
-
 # Object files for target untitled
 untitled_OBJECTS = \
 "CMakeFiles/untitled.dir/main.cpp.obj" \
@@ -174,8 +174,8 @@ untitled_OBJECTS = \
 "CMakeFiles/untitled.dir/Element.cpp.obj" \
 "CMakeFiles/untitled.dir/GlobalData.cpp.obj" \
 "CMakeFiles/untitled.dir/Functions.cpp.obj" \
-"CMakeFiles/untitled.dir/Elem2Solve.cpp.obj" \
-"CMakeFiles/untitled.dir/matrix.cpp.obj"
+"CMakeFiles/untitled.dir/ElemSolve.cpp.obj" \
+"CMakeFiles/untitled.dir/Elem2Solve.cpp.obj"
 
 # External object files for target untitled
 untitled_EXTERNAL_OBJECTS =
@@ -185,8 +185,8 @@ untitled.exe: CMakeFiles/untitled.dir/Node.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/Element.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/GlobalData.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/Functions.cpp.obj
+untitled.exe: CMakeFiles/untitled.dir/ElemSolve.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/Elem2Solve.cpp.obj
-untitled.exe: CMakeFiles/untitled.dir/matrix.cpp.obj
 untitled.exe: CMakeFiles/untitled.dir/build.make
 untitled.exe: CMakeFiles/untitled.dir/linklibs.rsp
 untitled.exe: CMakeFiles/untitled.dir/objects1.rsp
