@@ -7,8 +7,8 @@ void simulation(FEMGrid grid) {
     LocalMatrixElemData localMatrixElemData;
     //HFinal - H+(C/dtau), potem (H+(C/dtau))^-1
     //PFinal - P+((C/dtau)*t0)
-    //tVector - wektor rozwiazan ukladu rownan
-    //elem solve zwraca macierze lokalne
+    //tVector - vector which contains solution of the system of equations
+    //elem solve return local matrixes
     for (int a = 0; a < grid.nE; a++) {
         //agregacja
         localMatrixElemData = elemSolve(grid.arrE[a], grid);
@@ -28,7 +28,7 @@ void simulation(FEMGrid grid) {
         }
     }
 
-    //POROWNANIE Z TEST CASE:
+    //COMPARISION WITH TEST CASE:
 
     /*cout << "Macierz H+Hbc:\n";
     displayArray(grid.HGlobal);
@@ -46,7 +46,7 @@ void simulation(FEMGrid grid) {
 
 
     for (int i = 0; i < iter; i++) {
-        cout << "______________________Iteracja nr " << i + 1 << "______________________\n";
+        cout << "______________________ITERATION NO. " << i + 1 << "______________________\n";
         //displayVector(grid.t0Vector);
         for (int i = 0; i < grid.nN; i++) {
             grid.PFinal[i]=grid.PGlobal[i];
@@ -65,13 +65,13 @@ void simulation(FEMGrid grid) {
             grid.t0Vector[i] = temp;
         }
 
-        cout << "Rozwiazanie ukladu rownan:\n";
+        cout << "Solution of a system of equations:\n";
         //displayVector(grid.t0Vector);
-        cout << "Minimalna temperatura w zbiorze rozwiazan: ";
+        cout << "Minimum temperature in the solution set: ";
         cout.precision(6);
         cout.flush();
         cout << minVal(grid.t0Vector) << endl;
-        cout << "Maksymalna temperatura w zbiorze rozwiazan: ";
+        cout << "Maximum temperature in the solution set: ";
         cout.precision(6);
         cout.flush();
         cout << maxVal(grid.t0Vector) << endl;
